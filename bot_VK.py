@@ -24,9 +24,8 @@ longpoll = VkLongPoll(vk_session)
 vk_bot = vk_session.get_api()
 
 
-
-
 dict_targets = {}
+print('start_the_game')
 while True:
     for event in longpoll.listen():
         if event.type == VkEventType.MESSAGE_NEW and event.to_me:
