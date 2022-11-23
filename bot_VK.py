@@ -25,6 +25,7 @@ vk_bot = vk_session.get_api()
 
 
 
+
 dict_targets = {}
 while True:
     for event in longpoll.listen():
