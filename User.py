@@ -1,3 +1,4 @@
+import vk_api
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor, VkKeyboardButton
 from vk_api.utils import get_random_id
 
@@ -71,6 +72,16 @@ class User:
         user_get = self.vk_bot.users.get(user_ids=(id))
         user_get = user_get[0]
         return user_get['first_name']  # Имя пользователя
+
+    def send_photo(self, photo_1, user_id):
+        global attachment
+        upload = vk_api.VkUpload(self.vk_bot)
+        photo = upload.photo_messages(photo_1)
+        owner_id = photo[0]['owner_id']
+        photo_id = photo[0]['id']
+        access_key = photo[0]['access_key']
+        attachment = f'photo{owner_id}_{photo_id}_{access_key}'
+        self.vk_bot.messages.send(user_id=user_id, random_id=get_random_id(), attachment=attachment)
 
     def send_message_with_target(self, target, user_id, keyboard, message):
         if self.isWin_boss_MajorTrojanVirus or self.isWin_boss_Adware:  # дальше тут дописываем боссов
@@ -398,7 +409,7 @@ class User:
                 self.text_total_information += self.__text_information_boss_Adware
                 keyboard = VkKeyboard()
                 keyboard.add_button('Продолжить')
-                self.target = self.send_message_with_target('Опознать врага', user_id, keyboard, 'Поздравляем! Все рекламные вирусы были удалены с устройства.\n'
+                self.target = self.send_message_with_target('the_end', user_id, keyboard, 'Поздравляем! Все рекламные вирусы были удалены с устройства.\n'
                                                                                                   'Теперь вы можете увидеть всю информацию о вирусе, нажавав кнопку "Общая информация"')
             elif text == '2' and text == '3':
                 keyboard = VkKeyboard()

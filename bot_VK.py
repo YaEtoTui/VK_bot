@@ -8,14 +8,15 @@ from User import User
 import os
 import time
 
-def send_photo(photo_1):
-    global attachment
-    upload = vk_api.VkUpload(vk_bot)
-    photo = upload.photo_messages(photo_1)
-    owner_id = photo[0]['owner_id']
-    photo_id = photo[0]['id']
-    access_key = photo[0]['access_key']
-    attachment = f'photo{owner_id}_{photo_id}_{access_key}'
+# def send_photo(photo_1):
+#     global attachment
+#     upload = vk_api.VkUpload(vk_bot)
+#     photo = upload.photo_messages(photo_1)
+#     owner_id = photo[0]['owner_id']
+#     photo_id = photo[0]['id']
+#     access_key = photo[0]['access_key']
+#     attachment = f'photo{owner_id}_{photo_id}_{access_key}'
+#     vk_bot.messages.send(user_id=user_id, random_id=get_random_id(), attachment=attachment)
 
 token = 'vk1.a.2AHnn2z9Pgxy-nKeuPN6fgTyRuRHNk-w6LlQ6AwDdfV2ugW9Un6kVEm5DYdDWUa37xvCC0QZUSOJti-qFF-u6ZCqXGf62qUC9fmnxKZCk-CwRak2n2l1YiMFRZQYHEwQPevp2IZ1JpGidMJDOS7102lnTom8nS3XRJMNFvUubedPTLeR9CT2H93Hb3pJ6BiY'
 vk_session = vk_api.VkApi(token=token)
@@ -28,6 +29,7 @@ vk_bot = vk_session.get_api()
 dict_targets = {}
 print('start_the_game')
 while True:
+
     for event in longpoll.listen():
         if event.type == VkEventType.MESSAGE_NEW and event.to_me:
             text = event.text
@@ -40,8 +42,8 @@ while True:
                 print('\nСтарый {}'.format(user_id))
 
             if dict_targets[user_id].target == 'start':
-                send_photo(photo_1=os.path.abspath(os.path.join('Pictures', 'chapter_1.jpg'))) # пример отправки фота в двух строках
-                vk_bot.messages.send(user_id=user_id, random_id=get_random_id(), attachment=attachment)
+                # отправляем фотку(ниже 1 скрин)
+                dict_targets[user_id].send_photo(photo_1=os.path.abspath(os.path.join('Pictures', 'chapter_1.jpg')), user_id=user_id) # пример отправки фота
                 dict_targets[user_id].send_message_not_buttons(user_id, 'Вернувшись домой после тяжелого дня, вы замечаете, что на вашу электронную почту '
                                                                         'пришло письмо с незнакомого адреса. Заинтересованные, вы открываете его.')
                 keyboard = VkKeyboard()
@@ -112,6 +114,13 @@ while True:
             #2 босс Рекламные Вирусы
             elif dict_targets[user_id].isBattle_boss_Adware:
                 dict_targets[user_id].battle_boss_Adware(text, user_id)
+            elif dict_targets[user_id].target == 'the_end':
+                # заканчиваем игру и начинаем заново
+                dict_targets[user_id] = User(vk_bot)
+                dict_targets[user_id].target = 'start'
+                keyboard = VkKeyboard()
+                keyboard.add_button('Начать заново')
+                dict_targets[user_id].send_message(user_id, keyboard, 'Напишите что-нибудь, чтобы начать заново игру!')
 
 
             #     # условие доработать
@@ -132,6 +141,7 @@ while True:
             #         dict_targets[user_id] = User(vk_bot)  # доработать
             #     # рандомайзер, чтобы выбирался случайно босс
             #     dict_targets[user_id].choice_boss_or_mini_boss(user_id)
+
             print('{}'.format(dict_targets[user_id].target))
             print('Весь список {}'.format(dict_targets[user_id]))
 
