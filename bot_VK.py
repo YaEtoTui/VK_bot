@@ -1,21 +1,13 @@
-import vk_api, vk
+import vk_api
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor, VkKeyboardButton
-from vk_api.utils import get_random_id
 from vk_api.longpoll import VkLongPoll, VkEventType
-
 from User import User
-
 import os
-import time
 
 token = 'vk1.a.2AHnn2z9Pgxy-nKeuPN6fgTyRuRHNk-w6LlQ6AwDdfV2ugW9Un6kVEm5DYdDWUa37xvCC0QZUSOJti-qFF-u6ZCqXGf62qUC9fmnxKZCk-CwRak2n2l1YiMFRZQYHEwQPevp2IZ1JpGidMJDOS7102lnTom8nS3XRJMNFvUubedPTLeR9CT2H93Hb3pJ6BiY'
 vk_session = vk_api.VkApi(token=token)
-
 longpoll = VkLongPoll(vk_session)
 vk_bot = vk_session.get_api()
-
-
-
 dict_targets = {}
 print('start_the_game')
 while True:
@@ -124,6 +116,3 @@ while True:
 
             print('{}'.format(dict_targets[user_id].target))
             print('Весь список {}'.format(dict_targets[user_id]))
-
-
-

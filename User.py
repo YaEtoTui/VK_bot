@@ -1,8 +1,6 @@
 import vk_api
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor, VkKeyboardButton
 from vk_api.utils import get_random_id
-
-import time
 import random
 
 class User:
@@ -125,8 +123,6 @@ class User:
             random_id=get_random_id(),
             keyboard=keyboard.get_keyboard()
         )
-
-
 
     # мини-боссы
     def choice_boss_or_mini_boss(self, user_id):
@@ -407,7 +403,6 @@ class User:
             elif text == 'Подсказка':
                 self.send_message_not_buttons(user_id, '(Подсказка): Руткит обычно прячется глубоко в недрах операционной системы и специально написаны таким образом, чтобы избегать обнаружения антивирусом')
 
-
     #проигрышный босс
     def battle_lossing_boss(self, text, user_id):
         if self.target == 'boss_lossing':
@@ -577,7 +572,6 @@ class User:
                 self.send_message_not_buttons(user_id, 'Программа, для накручивания счетчиков (посещения страниц, показа баннеров), увеличения популярности сайта в '
                                                        'поисковиках, несанкционированно использует ресурсы компьютера, увеличивает трафик, тем самым приводят '
                                                        'к нарушению работы ЭВМ или их сети.')
-
 
     # не доделан босс снизу boss_Adware
     #с сюжетом доработать включая задержку
