@@ -23,6 +23,9 @@ while True:
             else:
                 print('\nСтарый {}'.format(user_id))
             if dict_targets[user_id].target == 'start':
+                # отправляем фотку(ниже 1 скрин)
+                dict_targets[user_id].send_photo(photo_1=os.path.abspath(os.path.join('Pictures', 'fon_3.png')),
+                                                 user_id=user_id)
                 keyboard = VkKeyboard()
                 keyboard.add_button('Начать путешествие')
                 dict_targets[user_id].target = dict_targets[user_id].send_message_with_target('Начать_путешествие', user_id, keyboard, 'Приветствую вас {user}, это текстовая игра(квест), все действия выполняются '
@@ -33,7 +36,8 @@ while True:
 
             if dict_targets[user_id].target == 'Начать_путешествие' and text == 'Начать путешествие':
                 # отправляем фотку(ниже 1 скрин)
-                dict_targets[user_id].send_photo(photo_1=os.path.abspath(os.path.join('Pictures', 'chapter_1.jpg')), user_id=user_id) # пример отправки фота
+                dict_targets[user_id].send_photo(photo_1=os.path.abspath(os.path.join('Pictures', 'fon_2.jpg')), user_id=user_id) # пример отправки фота
+                # отправляем фотку(ниже 1 скрин)
                 dict_targets[user_id].send_message_not_buttons(user_id, 'Вернувшись домой после тяжелого дня, вы замечаете, что на вашу электронную почту '
                                                                         'пришло письмо с незнакомого адреса. Заинтересованные, вы открываете его.')
                 keyboard = VkKeyboard()
