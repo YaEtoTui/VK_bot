@@ -70,6 +70,7 @@ class User:
 
         self.text_total_information = ''
         self.target = 'start'
+        self.target_return_to_mini_boss = '' # возвращает к прошлому мини-боссу при победе Проигрышного босса
 
     def get_name(self, user_id):
         id = user_id
@@ -169,7 +170,7 @@ class User:
 
     def battle_DestructiveTrojanHorse(self, text, user_id):
         if self.target == 'is_battle_mini-boss_DestructiveTrojanHorse':
-            if text == 'Напасть' or text == 'Попытаться незаметно ускользнуть' or text == 'Начать бой сначала':
+            if text == 'Напасть' or text == 'Попытаться незаметно ускользнуть' or text == 'Начать бой сначала' or text == 'Продолжить':
                 if text == 'Попытаться незаметно ускользнуть':
                     self.send_message_not_buttons(user_id, 'Упс, Но кажется, вам не удалось остаться незамеченным, так что убежать уже не представляется возможным ')
 
@@ -197,13 +198,31 @@ class User:
                 keyboard.add_button('Продолжить путь')
                 self.target = self.send_message_with_target('boss_1', user_id, keyboard, 'Поздравляем вы уничтожили своего первого противника, но впереди еще долгое путешествие, наберитесь сил и отправляйтесь дальше')
             elif text == '2':
-                keyboard = VkKeyboard()
-                keyboard.add_button('Начать бой сначала')
-                self.target = self.send_message_with_target('is_battle_mini-boss_DestructiveTrojanHorse', user_id, keyboard, 'Похоже, что удаление папки только разозлило деструктивного троянского коня. Разъярённый, он бросился на вас. Вы проиграли, но не отчаивайтесь и попробуйте ещё раз.')
+                # переходим к проигрышному боссу
+                if not self.isWin_boss_lossing:
+                    self.isBattle_DestructiveTrojanHorse = False
+                    self.isBattle_boss_lossing = True
+                    self.target_return_to_mini_boss = 'is_battle_mini-boss_DestructiveTrojanHorse'
+                    keyboard = VkKeyboard()
+                    keyboard.add_button('Продолжить')
+                    self.target = self.send_message_with_target('boss_lossing', user_id, keyboard, 'Похоже, что удаление папки только разозлило деструктивного троянского коня. Разъярённый, он бросился на вас. Вы проиграли, но не отчаивайтесь и попробуйте ещё раз.')
+                else:
+                    keyboard = VkKeyboard()
+                    keyboard.add_button('Начать бой сначала')
+                    self.target = self.send_message_with_target('is_battle_mini-boss_DestructiveTrojanHorse', user_id, keyboard, 'Похоже, что удаление папки только разозлило деструктивного троянского коня. Разъярённый, он бросился на вас. Вы проиграли, но не отчаивайтесь и попробуйте ещё раз.')
             elif text == '3':
-                keyboard = VkKeyboard()
-                keyboard.add_button('Начать бой сначала')
-                self.target = self.send_message_with_target('is_battle_mini-boss_DestructiveTrojanHorse', user_id, keyboard, 'Вы остановили программу, но не самого вируса. Попробуйте ещё раз.')
+                # переходим к проигрышному боссу
+                if not self.isWin_boss_lossing:
+                    self.isBattle_DestructiveTrojanHorse = False
+                    self.isBattle_boss_lossing = True
+                    self.target_return_to_mini_boss = 'is_battle_mini-boss_DestructiveTrojanHorse'
+                    keyboard = VkKeyboard()
+                    keyboard.add_button('Продолжить')
+                    self.target = self.send_message_with_target('boss_lossing', user_id, keyboard, 'Вы остановили программу, но не самого вируса. Попробуйте ещё раз.')
+                else:
+                    keyboard = VkKeyboard()
+                    keyboard.add_button('Начать бой сначала')
+                    self.target = self.send_message_with_target('is_battle_mini-boss_DestructiveTrojanHorse', user_id, keyboard, 'Вы остановили программу, но не самого вируса. Попробуйте ещё раз.')
             elif text == 'Подсказка':
                 self.send_message_not_buttons(user_id, 'Подсказка: Если троянская программа проникла на Ваше устройство, то самый универсальный способ избавиться от нее и восстановить прежнюю функциональность системы это выполнить полную проверку системы с помощью эффективной программы, способной автоматически удалять вредоносное ПО.')
 
@@ -349,6 +368,7 @@ class User:
                 if not self.isWin_boss_lossing:
                     self.isBattle_Rootkit = False
                     self.isBattle_boss_lossing = True
+                    self.target_return_to_mini_boss = 'mini-boss_Rootkit'
                     keyboard = VkKeyboard()
                     keyboard.add_button('Продолжить')
                     self.target = self.send_message_with_target('boss_lossing', user_id, keyboard, 'Вирус проник намного глубже и удаление только заметных файлов не помогли окончательно избавиться от руткита ')
@@ -361,6 +381,7 @@ class User:
                     # переходим к проигрышному боссу
                     self.isBattle_Rootkit = False
                     self.isBattle_boss_lossing = True
+                    self.target_return_to_mini_boss = 'mini-boss_Rootkit'
                     keyboard = VkKeyboard()
                     keyboard.add_button('Продолжить')
                     self.target = self.send_message_with_target('boss_lossing', user_id, keyboard, 'Антивирус оказался не самым быстрым вашим другом, а следующий удар руткита всё же достиг задуманной цели и попал в вас')
@@ -373,6 +394,7 @@ class User:
                     # переходим к проигрышному боссу
                     self.isBattle_Rootkit = False
                     self.isBattle_boss_lossing = True
+                    self.target_return_to_mini_boss = 'mini-boss_Rootkit'
                     keyboard = VkKeyboard()
                     keyboard.add_button('Продолжить')
                     self.target = self.send_message_with_target('boss_lossing', user_id, keyboard, 'К сожалению, переустановка не помогла, и вторым ударом вирус спокойно добил вас')
@@ -385,6 +407,7 @@ class User:
                     # переходим к проигрышному боссу
                     self.isBattle_Rootkit = False
                     self.isBattle_boss_lossing = True
+                    self.target_return_to_mini_boss = 'mini-boss_Rootkit'
                     keyboard = VkKeyboard()
                     keyboard.add_button('Продолжить')
                     self.target = self.send_message_with_target('boss_lossing', user_id, keyboard, 'Попытка была неплохой, но не самой действенной, ведь после сброса настроек вирус так и остался перед вами, да ещё и с очередным ударом, увернуться от которого уже не представляется возможным ')
@@ -403,7 +426,7 @@ class User:
             elif text == 'Подсказка':
                 self.send_message_not_buttons(user_id, '(Подсказка): Руткит обычно прячется глубоко в недрах операционной системы и специально написаны таким образом, чтобы избегать обнаружения антивирусом')
 
-    #проигрышный босс
+    #проигрышный босс (Спуфер), ставим после проигрыша у мини-боссов
     def battle_lossing_boss(self, text, user_id):
         if self.target == 'boss_lossing':
             if text == 'Продолжить':
@@ -424,31 +447,39 @@ class User:
                     keyboard.add_line()
                     keyboard.add_button('Подсказка')
                 else:
-                    self.send_message_not_buttons(user_id, 'Как только вы нажали кнопку включения, компьютер сразу затянул вас внутрь. Но ввести пароль для входа вам мешает ещё один вирус, спулер. Чтобы обратно вернуться в цифровой мир вам следует избавиться от него. Что предпримите?')
-                self.send_message_not_buttons(user_id, '1. Проведу полный анализ системы и очистить все глубокие источники руткита')
-                self.send_message_not_buttons(user_id, '2. Удалю все заметные файлы руткита ')
-                self.send_message_not_buttons(user_id, '3. Переустановлю операционную систему')
-                self.target = self.send_message_with_target('boss_lossing_choice_2', user_id, keyboard, '4. Сброшу настройки системы')
+                    self.send_message_not_buttons(user_id, 'Как только вы нажали кнопку включения, компьютер сразу затянул вас внутрь. Но ввести пароль для входа вам мешает ещё один вирус, Спуфер. Чтобы обратно вернуться в цифровой мир вам следует избавиться от него. Что предпримите?')
+                self.send_message_not_buttons(user_id, '1. Буду использую двухфакторную аутентификацию')
+                self.send_message_not_buttons(user_id, '2. Дам доступ к личной информации другим')
+                self.send_message_not_buttons(user_id, '3. Буду использовать спам-фильтр ')
+                self.target = self.send_message_with_target('boss_lossing_choice_2', user_id, keyboard, '4. Везде буду использовать один и тот же пароль')
             elif text == 'Закончить игру':
                 # заканчиваем игру
                 # доработать !!!!!!!!
                 self.target = 'the_end'
                 self.isBattle_boss_lossing = False
         elif self.target == 'boss_lossing_choice_2':
-            if text == '1':
+            if text == '1' or text == '3':
                 # Победа!!
                 self.isBattle_boss_lossing = False
                 self.isWin_boss_lossing = True
-                self.isBattle_Rootkit = True
+
+                # доработать, при каждом добавлении мини-босса
+                if self.target_return_to_mini_boss == 'is_battle_mini-boss_DestructiveTrojanHorse':
+                    self.isBattle_DestructiveTrojanHorse = True
+                elif self.target_return_to_mini_boss == 'mini-boss_Rootkit':
+                    self.isBattle_Rootkit = True
+                elif self.target_return_to_mini_boss == 'mini_boss_KeyLogger':
+                    self.isBattle_KeyLogger = True
+
                 keyboard = VkKeyboard()
                 keyboard.add_button('Продолжить')
-                self.target = self.send_message_with_target('mini-boss_Rootkit', user_id, keyboard, 'Прекрасно! Вы справились с шпионом на вашем компьютере и можете продолжить свой путь.')
-            elif text == '2' or text == '3' or text == '4':
+                self.target = self.send_message_with_target(self.target_return_to_mini_boss, user_id, keyboard, 'Прекрасно! Вы справились с шпионом на вашем компьютере и можете продолжить свой путь.')
+            elif text == '2' or text == '4':
                 keyboard = VkKeyboard()
                 keyboard.add_button('Начать бой сначала')
                 self.target = self.send_message_with_target('boss_lossing_choice', user_id, keyboard, 'Похоже, что ваши действия не возымели действия, стоит попробовать сделать что-то другое')
             elif text == 'Подсказка':
-                self.send_message_not_buttons(user_id, '(Подсказка): Руткит обычно прячется глубоко в недрах операционной системы и специально написаны таким образом, чтобы избегать обнаружения антивирусом')
+                self.send_message_not_buttons(user_id, '(Подсказка): Никогда не следует давать свою личную информацию, использовать один пароль, отвечать на звонки незнакомым людям')
 
     def battle_KeyLogger(self, text, user_id):
         if self.target == 'mini_boss_KeyLogger':
@@ -489,13 +520,29 @@ class User:
                 self.isBattle_KeyLogger = False
                 self.target = self.send_message_with_target('the_end', user_id, keyboard, 'К огромному сожалению вируса, вам удалось перекрыть ему доступ к данным, так что делать ему здесь больше нечего и он просто быстро уполз ')
             elif text == '2':
-                keyboard = VkKeyboard()
-                keyboard.add_button('Начать бой сначала')
-                self.target = self.send_message_with_target('mini_boss_KeyLogger_choice', user_id, keyboard, 'Данные действия только упростили вирусу задачу, стоит попробовать что-то другое')
+                if not self.isWin_boss_lossing:
+                    self.isBattle_KeyLogger = False
+                    self.isBattle_boss_lossing = True
+                    self.target_return_to_mini_boss = 'mini_boss_KeyLogger'
+                    keyboard = VkKeyboard()
+                    keyboard.add_button('Продолжить')
+                    self.target = self.send_message_with_target('boss_lossing', user_id, keyboard, 'Данные действия только упростили вирусу задачу, стоит попробовать что-то другое')
+                else:
+                    keyboard = VkKeyboard()
+                    keyboard.add_button('Начать бой сначала')
+                    self.target = self.send_message_with_target('mini_boss_KeyLogger_choice', user_id, keyboard, 'Данные действия только упростили вирусу задачу, стоит попробовать что-то другое')
             elif text == '3':
-                keyboard = VkKeyboard()
-                keyboard.add_button('Начать бой сначала')
-                self.target = self.send_message_with_target('mini_boss_KeyLogger_choice', user_id, keyboard, 'Кажется, что перекачка пошла ещё быстрее, давайте попытаемся ещё раз')
+                if not self.isWin_boss_lossing:
+                    self.isBattle_KeyLogger = False
+                    self.isBattle_boss_lossing = True
+                    self.target_return_to_mini_boss = 'mini_boss_KeyLogger'
+                    keyboard = VkKeyboard()
+                    keyboard.add_button('Продолжить')
+                    self.target = self.send_message_with_target('boss_lossing', user_id, keyboard, 'Кажется, что перекачка пошла ещё быстрее, давайте попытаемся ещё раз')
+                else:
+                    keyboard = VkKeyboard()
+                    keyboard.add_button('Начать бой сначала')
+                    self.target = self.send_message_with_target('mini_boss_KeyLogger_choice', user_id, keyboard, 'Кажется, что перекачка пошла ещё быстрее, давайте попытаемся ещё раз')
             elif text == 'Подсказка':
                 self.send_message_not_buttons(user_id, '(Клавиатурный шпион(KeyLogger)- это отслеживание нажатий каждой клавиши клавиатуры, поэтому ввод паролей на незащищенных сайтах и ввод его в ручную является грубой ошибкой при пользовании устройством)')
 

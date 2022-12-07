@@ -101,7 +101,7 @@ while True:
             elif dict_targets[user_id].isBattle_Rootkit:
                 dict_targets[user_id].battle_Rootkit(user_id=user_id, text=text)
 
-            # проигрышный босс, если проигрывает Руткиту
+            # проигрышный босс Спуфер
             elif dict_targets[user_id].isBattle_boss_lossing:
                 dict_targets[user_id].battle_lossing_boss(user_id=user_id, text=text)
 
