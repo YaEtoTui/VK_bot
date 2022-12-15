@@ -27,34 +27,42 @@ while True:
                 else:
                     print('\nИгрок: {}'.format(user_id))
                 if dict_targets[user_id].target == 'start':
-                    # отправляем фотку(ниже 1 скрин)
-                    dict_targets[user_id].send_photo(photo_1=os.path.abspath(os.path.join('Pictures', 'fon_3.png')),
-                                                     user_id=user_id)
-                    keyboard = VkKeyboard()
-                    keyboard.add_button('Начать путешествие')
-                    dict_targets[user_id].target = dict_targets[user_id].send_message_with_target('Начать_путешествие', user_id, keyboard, 'Приветствую вас {user}, это текстовая игра(квест), все действия выполняются '
-                                                                                                                                           'с помощью кнопок под окном чата, а результаты приходят в виде сообщений и картинок. '
-                                                                                                                                           'Исследуйте мир вашего компьютера, узнавайте что-то новое о вирусах и программах, способных навредить '
-                                                                                                                                           'вашему устройству, получайте подсказки, уничтожайте врагов(вирусы) и сражайтесь с основными врагами-боссами '
-                                                                                                                                           '(главными вирусами).'.format(user=dict_targets[user_id].get_name(user_id)))
-
+                    try:
+                        # отправляем фотку(ниже 1 скрин)
+                        dict_targets[user_id].send_photo(photo_1=os.path.abspath(os.path.join('Pictures', 'fon_3.png')),
+                                                         user_id=user_id)
+                    except Exception as exc:
+                        print('Картинка не прогрузилась!')
+                    finally:
+                        keyboard = VkKeyboard()
+                        keyboard.add_button('Начать путешествие')
+                        dict_targets[user_id].target = dict_targets[user_id].send_message_with_target('Начать_путешествие',
+                                                                                                      user_id, keyboard,
+                                                                                                      'Приветствую вас {user}, это текстовая игра(квест), все действия выполняются '
+                                                                                                      'с помощью кнопок под окном чата, а результаты приходят в виде сообщений и картинок. '
+                                                                                                      'Исследуйте мир вашего компьютера, узнавайте что-то новое о вирусах и программах, способных навредить '
+                                                                                                      'вашему устройству, получайте подсказки, уничтожайте врагов(вирусы) и сражайтесь с основными врагами-боссами '
+                                                                                                      '(главными вирусами).'.format(user=dict_targets[user_id].get_name(user_id)))
                 if dict_targets[user_id].target == 'Начать_путешествие' and text == 'Начать путешествие':
-                    # отправляем фотку(ниже 1 скрин)
-                    dict_targets[user_id].send_photo(photo_1=os.path.abspath(os.path.join('Pictures', 'fon_2.jpg')), user_id=user_id) # пример отправки фота
-                    # отправляем фотку(ниже 1 скрин)
-                    dict_targets[user_id].send_message_not_buttons(user_id, 'Вернувшись домой после тяжелого дня, вы замечаете, что на вашу электронную почту '
-                                                                            'пришло письмо с незнакомого адреса. Заинтересованные, вы открываете его.')
-                    keyboard = VkKeyboard()
-                    keyboard.add_button('1')
-                    keyboard.add_button('2')
-                    keyboard.add_button('3')
+                    try:
+                        # отправляем фотку(ниже 1 скрин)
+                        dict_targets[user_id].send_photo(photo_1=os.path.abspath(os.path.join('Pictures', 'fon_2.jpg')), user_id=user_id)
+                        dict_targets[user_id].send_message_not_buttons(user_id, 'Вернувшись домой после тяжелого дня, вы замечаете, что на вашу электронную почту '
+                                                                                'пришло письмо с незнакомого адреса. Заинтересованные, вы открываете его.')
+                    except Exception as exc:
+                        print('Картинка не прогрузилась!')
+                    finally:
+                        keyboard = VkKeyboard()
+                        keyboard.add_button('1')
+                        keyboard.add_button('2')
+                        keyboard.add_button('3')
 
-                    dict_targets[user_id].send_message(user_id, keyboard, 'В тот же миг на ваш компьютер загружается вредоносная программа, которая находилась '
-                                                                          'в письме и только и ждала того, чтобы вы его открыли. ')
-                    dict_targets[user_id].send_message_not_buttons(user_id, '(1) -Перезапущу компьютер, и всё будет хорошо')
-                    dict_targets[user_id].send_message_not_buttons(user_id, '(2) -Ой, а что же теперь делать?')
-                    dict_targets[user_id].send_message_not_buttons(user_id, '(3) -Да не может такого быть, приколы какие-то')
-                    dict_targets[user_id].target = 'start_1'
+                        dict_targets[user_id].send_message(user_id, keyboard, 'В тот же миг на ваш компьютер загружается вредоносная программа, которая находилась '
+                                                                              'в письме и только и ждала того, чтобы вы его открыли. ')
+                        dict_targets[user_id].send_message_not_buttons(user_id, '(1) -Перезапущу компьютер, и всё будет хорошо')
+                        dict_targets[user_id].send_message_not_buttons(user_id, '(2) -Ой, а что же теперь делать?')
+                        dict_targets[user_id].send_message_not_buttons(user_id, '(3) -Да не может такого быть, приколы какие-то')
+                        dict_targets[user_id].target = 'start_1'
                 elif dict_targets[user_id].target == 'start_1' and (text == '1' or text == '2' or text == '3'):
                     if text == '1':
                         dict_targets[user_id].send_message_not_buttons(user_id, 'После перезапуска ничего не изменилось, и вирусы всё так же находятся в компьютере')
@@ -125,4 +133,4 @@ while True:
                 print('Текущий checkpoint: {}'.format(dict_targets[user_id].target))
                 print('Время: {}'.format(datetime.datetime.now()))
         except Exception as exc:
-            print('Возникла ошибка {}'.format(exc.__name__))
+            print('Возникла ошибка {}'.format(exc))
