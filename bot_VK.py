@@ -72,7 +72,6 @@ while True:
                 text = event.text
                 user_id = event.user_id
 
-
                 if not check_if_exists(user_id):
                     register_new_user(user_id)
                     dict_targets[user_id] = User(vk_bot)

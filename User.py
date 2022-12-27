@@ -124,17 +124,12 @@ class User():
                 self.target = self.send_message_with_target('is_battle_mini-boss_DestructiveTrojanHorse_choice', user_id, keyboard, '3. Остановить программу через диспетчер задач')
         elif self.target == 'is_battle_mini-boss_DestructiveTrojanHorse_choice':
             if text == '1':
-                self.isWin_DestructiveTrojanHorse = True
-                self.isBattle_DestructiveTrojanHorse = False  # победили мини-босса, открыли путь к боссу
-                self.isBattle_boss_MajorTrojanVirus = True
                 keyboard = VkKeyboard()
                 keyboard.add_button('Продолжить путь')
                 self.target = self.send_message_with_target('boss_1', user_id, keyboard, 'Поздравляем вы уничтожили своего первого противника, но впереди еще долгое путешествие, наберитесь сил и отправляйтесь дальше')
             elif text == '2':
                 # переходим к проигрышному боссу
                 if not self.isWin_boss_lossing:
-                    self.isBattle_DestructiveTrojanHorse = False
-                    self.isBattle_boss_lossing = True
                     self.target_return_to_mini_boss = 'is_battle_mini-boss_DestructiveTrojanHorse'
                     keyboard = VkKeyboard()
                     keyboard.add_button('Продолжить')
@@ -146,8 +141,6 @@ class User():
             elif text == '3':
                 # переходим к проигрышному боссу
                 if not self.isWin_boss_lossing:
-                    self.isBattle_DestructiveTrojanHorse = False
-                    self.isBattle_boss_lossing = True
                     self.target_return_to_mini_boss = 'is_battle_mini-boss_DestructiveTrojanHorse'
                     keyboard = VkKeyboard()
                     keyboard.add_button('Продолжить')
@@ -207,8 +200,6 @@ class User():
                                                        'вредоносное ПО.)')
         elif self.target == 'Запуск антивируса для удаления остатков коней' and text == 'Запуск антивируса':
             self.isWin_boss_MajorTrojanVirus = True
-            self.isBattle_boss_MajorTrojanVirus = False
-            self.is_meeting_with_a_person = True
             keyboard = VkKeyboard()
             self.text_total_information += self.__text_information_boss_MajorTrojanVirus
             keyboard.add_button('Отправиться дальше')
@@ -267,8 +258,6 @@ class User():
             keyboard = VkKeyboard()
             keyboard.add_button('Опознать программу')
             self.target = self.send_message_with_target('mini-boss_Rootkit', user_id, keyboard, 'Поначалу всё было спокойно, неподвижную тишину нарушал только звук ваших шагов. Направление вашего движения подсказывали указатели, расставленные на какой развилке. Вы уже даже успели подумать, что всё не так страшно, как показалось изначально, как вдруг прямо перед вами материализовалась какая-то программа.')
-            self.is_meeting_with_a_person = False
-            self.isBattle_Rootkit = True
 
     #Руткит
     def battle_Rootkit(self, text, user_id):
@@ -299,8 +288,6 @@ class User():
             if text == '1':
                 #переходим к проигрышному боссу
                 if not self.isWin_boss_lossing:
-                    self.isBattle_Rootkit = False
-                    self.isBattle_boss_lossing = True
                     self.target_return_to_mini_boss = 'mini-boss_Rootkit'
                     keyboard = VkKeyboard()
                     keyboard.add_button('Продолжить')
@@ -312,8 +299,6 @@ class User():
             elif text == '2':
                 if not self.isWin_boss_lossing:
                     # переходим к проигрышному боссу
-                    self.isBattle_Rootkit = False
-                    self.isBattle_boss_lossing = True
                     self.target_return_to_mini_boss = 'mini-boss_Rootkit'
                     keyboard = VkKeyboard()
                     keyboard.add_button('Продолжить')
@@ -325,8 +310,6 @@ class User():
             elif text == '4':
                 if not self.isWin_boss_lossing:
                     # переходим к проигрышному боссу
-                    self.isBattle_Rootkit = False
-                    self.isBattle_boss_lossing = True
                     self.target_return_to_mini_boss = 'mini-boss_Rootkit'
                     keyboard = VkKeyboard()
                     keyboard.add_button('Продолжить')
@@ -338,8 +321,6 @@ class User():
             elif text == '5':
                 if not self.isWin_boss_lossing:
                     # переходим к проигрышному боссу
-                    self.isBattle_Rootkit = False
-                    self.isBattle_boss_lossing = True
                     self.target_return_to_mini_boss = 'mini-boss_Rootkit'
                     keyboard = VkKeyboard()
                     keyboard.add_button('Продолжить')
@@ -350,9 +331,6 @@ class User():
                     self.target = self.send_message_with_target('mini-boss_Rootkit', user_id, keyboard, 'Попытка была неплохой, но не самой действенной, ведь после сброса настроек вирус так и остался перед вами, да ещё и с очередным ударом, увернуться от которого уже не представляется возможным ')
             elif text == '3':
                 # Победа!!
-                self.isWin_Rootkit = True
-                self.isBattle_Rootkit = False
-                self.isBattle_KeyLogger = True
                 keyboard = VkKeyboard()
                 keyboard.add_button('Продолжить')
                 self.target = self.send_message_with_target('mini_boss_KeyLogger', user_id, keyboard, 'Только руткит собрался ударить ещё раз, как начал распадаться на мелкие частички и через пару секунд совсем исчез')
@@ -389,20 +367,18 @@ class User():
                 # заканчиваем игру
                 # доработать !!!!!!!!
                 self.target = 'the_end'
-                self.isBattle_boss_lossing = False
         elif self.target == 'boss_lossing_choice_2':
             if text == '1' or text == '3':
                 # Победа!!
-                self.isBattle_boss_lossing = False
                 self.isWin_boss_lossing = True
 
                 # доработать, при каждом добавлении мини-босса
-                if self.target_return_to_mini_boss == 'is_battle_mini-boss_DestructiveTrojanHorse':
-                    self.isBattle_DestructiveTrojanHorse = True
-                elif self.target_return_to_mini_boss == 'mini-boss_Rootkit':
-                    self.isBattle_Rootkit = True
-                elif self.target_return_to_mini_boss == 'mini_boss_KeyLogger':
-                    self.isBattle_KeyLogger = True
+                # if self.target_return_to_mini_boss == 'is_battle_mini-boss_DestructiveTrojanHorse':
+                #     self.isBattle_DestructiveTrojanHorse = True
+                # elif self.target_return_to_mini_boss == 'mini-boss_Rootkit':
+                #     self.isBattle_Rootkit = True
+                # elif self.target_return_to_mini_boss == 'mini_boss_KeyLogger':
+                #     self.isBattle_KeyLogger = True
 
                 keyboard = VkKeyboard()
                 keyboard.add_button('Продолжить')
@@ -427,7 +403,6 @@ class User():
         elif self.target == 'mini_boss_KeyLogger_choice':
             if text == '1':
                 # убежали
-                self.isBattle_KeyLogger = False
                 self.target = 'the_end'
             elif text == '2' or text == 'Начать бой сначала':
                 keyboard = VkKeyboard()
@@ -450,12 +425,9 @@ class User():
                 # ждём продолжения сюжета
                 keyboard = VkKeyboard()
                 keyboard.add_button('Продолжить')
-                self.isBattle_KeyLogger = False
                 self.target = self.send_message_with_target('the_end', user_id, keyboard, 'К огромному сожалению вируса, вам удалось перекрыть ему доступ к данным, так что делать ему здесь больше нечего и он просто быстро уполз ')
             elif text == '2':
                 if not self.isWin_boss_lossing:
-                    self.isBattle_KeyLogger = False
-                    self.isBattle_boss_lossing = True
                     self.target_return_to_mini_boss = 'mini_boss_KeyLogger'
                     keyboard = VkKeyboard()
                     keyboard.add_button('Продолжить')
@@ -466,8 +438,6 @@ class User():
                     self.target = self.send_message_with_target('mini_boss_KeyLogger_choice', user_id, keyboard, 'Данные действия только упростили вирусу задачу, стоит попробовать что-то другое')
             elif text == '3':
                 if not self.isWin_boss_lossing:
-                    self.isBattle_KeyLogger = False
-                    self.isBattle_boss_lossing = True
                     self.target_return_to_mini_boss = 'mini_boss_KeyLogger'
                     keyboard = VkKeyboard()
                     keyboard.add_button('Продолжить')
