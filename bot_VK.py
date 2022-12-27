@@ -18,22 +18,21 @@ def register_new_user(user_id):
     c.execute(
         'INSERT INTO users_game_bot_VK(user_id, target, isWin_boss_lossing, isWin_boss_MajorTrojanVirus, target_return_to_mini_boss) VALUES (%d, "start", %d, %d, "")' % (user_id, 0, 0))
     conn.commit()
+    print('User зарегистрирован')
 
 def saved_in_bd(user_id, target, isWin_boss_lossing, isWin_boss_MajorTrojanVirus, target_return_to_mini_boss):
     c.execute('UPDATE users_game_bot_VK SET target="%s", isWin_boss_lossing=%d, isWin_boss_MajorTrojanVirus=%d, target_return_to_mini_boss="%s" WHERE user_id=%d' % (target, isWin_boss_lossing, isWin_boss_MajorTrojanVirus, target_return_to_mini_boss, user_id))
     conn.commit()
-    print('Saved!')
+    print('Сохранено')
 
 def set_target(user_id):
     c.execute('SELECT target FROM users_game_bot_VK WHERE user_id = %d' % user_id)
     result = c.fetchone()
-    print(result[0])
     return result[0]
 
 def set_isWin_boss_MajorTrojanVirus(user_id):
     c.execute('SELECT isWin_boss_MajorTrojanVirus FROM users_game_bot_VK WHERE user_id = %d' % user_id)
     result = c.fetchone()
-    print(result[0])
     if result[0] != 0:
         return True
     else:
@@ -42,7 +41,6 @@ def set_isWin_boss_MajorTrojanVirus(user_id):
 def set_isWin_boss_lossing(user_id):
     c.execute('SELECT isWin_boss_lossing FROM users_game_bot_VK WHERE user_id = %d' % user_id)
     result = c.fetchone()
-    print(result[0])
     if result[0] != 0:
         return True
     else:
@@ -51,21 +49,18 @@ def set_isWin_boss_lossing(user_id):
 def set_target_return_to_mini_boss(user_id):
     c.execute('SELECT target_return_to_mini_boss FROM users_game_bot_VK WHERE user_id = %d' % user_id)
     result = c.fetchone()
-    print(result[0])
     return result[0]
 
 conn = sqlite3.connect('db.db')
 c = conn.cursor()
-
 
 token = 'vk1.a.2AHnn2z9Pgxy-nKeuPN6fgTyRuRHNk-w6LlQ6AwDdfV2ugW9Un6kVEm5DYdDWUa37xvCC0QZUSOJti-qFF-u6ZCqXGf62qUC9fmnxKZCk-CwRak2n2l1YiMFRZQYHEwQPevp2IZ1JpGidMJDOS7102lnTom8nS3XRJMNFvUubedPTLeR9CT2H93Hb3pJ6BiY'
 vk_session = vk_api.VkApi(token=token)
 longpoll = VkLongPoll(vk_session)
 vk_bot = vk_session.get_api()
 dict_targets = {}
-print('Начало игры!')
+print('Скрипт запущен')
 while True:
-
     for event in longpoll.listen():
         try:
             if event.type == VkEventType.MESSAGE_NEW and event.to_me:
@@ -147,7 +142,6 @@ while True:
                     keyboard.add_button('Напасть')
                     keyboard.add_line()
                     keyboard.add_button('Попытаться незаметно ускользнуть')
-                    dict_targets[user_id].isBattle_DestructiveTrojanHorse = True
                     dict_targets[user_id].target = dict_targets[user_id].send_message_with_target(
                         'is_battle_mini-boss_DestructiveTrojanHorse', user_id, keyboard,
                         'Вы явно не самый везучий, ведь путь вам преградил не кто иной, как деструктивный троянский конь. '
