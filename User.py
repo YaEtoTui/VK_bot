@@ -1,9 +1,10 @@
 import vk_api
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor, VkKeyboardButton
 from vk_api.utils import get_random_id
-import random
 
-class User:
+class User():
+
+
     __text_information_boss_MajorTrojanVirus = 'Троянские вирусы — Trojan\n' \
                                               'Троянская программа маскируется в других безвредных программах. ' \
                                               'И до того момента как пользователь не запустит эту самую безвредную программу, ' \
@@ -29,48 +30,23 @@ class User:
                                       'компьютере и заменять основные ее функции, чтобы скрыть свое собственное присутствие и действия, которые предпринимает злоумышленник' \
                                       ' на зараженном компьютере.\n\n'
 
-    def __init__(self, vk_bot):
+    def __init__(self, vk_bot, target='start', isWin_boss_lossing=False, isWin_boss_MajorTrojanVirus=False, target_return_to_mini_boss=''):
         self.vk_bot = vk_bot
 
-        self.isBattle_DestructiveTrojanHorse = False
-        self.isWin_DestructiveTrojanHorse = False  # Деструктивный троянский конь
-        self.isBattle_AdWare = False  # рекламная программа
-        self.isWin_AdWare = False
-        self.isBattle_Clicker = False
-        self.isWin_Clicker = False  # Кликер
-
-        self.isBattle_KeyLogger = False
-        self.isWin_KeyLogger = False # Клавиатурный шпион
-
-        self.isBattle_RAT = False
-        self.isWin_RAT = False # Программа удаленного администрирования
-        self.isBattle_Dropper = False
-        self.isWin_Dropper = False # Клей
-        self.isBattle_Rootkit = False
-        self.isWin_Rootkit = False # Руткит
-        self.isBattle_Hijacker = False
-        self.isWin_Hijacker = False # Хиджакер
-        self.isBattle_Joke = False
-        self.isWin_Joke = False # Шутка
-        # боссы
-        self.isBattle_boss_MajorTrojanVirus = False
-        self.isWin_boss_MajorTrojanVirus = False  # Главный троянский вирус
-        self.isBattle_boss_Adware = False
-        self.isWin_boss_Adware = False  # Рекламные вирусы
-
-        self.isBattle_boss_lossing = False
-        self.isWin_boss_lossing = False # Проигрышный босс
-
-        self.isBattle_boss_Zombie = False
-        self.isWin_boss_Zombie = False # Зомби
-        self.isBattle_boss_Rootkit = False # Вирус-маскировщик
-        self.isWin_boss_Rootkit = False  # Маскировщик
-        #обучение
-        self.is_meeting_with_a_person = False
-
         self.text_total_information = ''
-        self.target = 'start'
-        self.target_return_to_mini_boss = '' # возвращает к прошлому мини-боссу при победе Проигрышного босса
+        if (isWin_boss_MajorTrojanVirus):
+            self.text_total_information += self.__text_information_boss_MajorTrojanVirus
+
+        # боссы
+        self.isWin_boss_MajorTrojanVirus = isWin_boss_MajorTrojanVirus  # Главный троянский вирус
+        self.isWin_boss_lossing = isWin_boss_lossing # Проигрышный босс
+
+        self.isWin_boss_Adware = False  # Рекламные вирусы
+        self.isWin_boss_Zombie = False # Зомби
+        self.isWin_boss_Rootkit = False  # Маскировщик
+
+        self.target = target
+        self.target_return_to_mini_boss = target_return_to_mini_boss # возвращает к прошлому мини-боссу при победе Проигрышного босса
 
     def get_name(self, user_id):
         id = user_id
@@ -124,49 +100,6 @@ class User:
             random_id=get_random_id(),
             keyboard=keyboard.get_keyboard()
         )
-
-    # мини-боссы
-    def choice_boss_or_mini_boss(self, user_id):
-        if self.isWin_DestructiveTrojanHorse and not self.isWin_boss_MajorTrojanVirus:
-            self.isBattle_boss_MajorTrojanVirus = True
-            keyboard = VkKeyboard()
-            keyboard.add_button('Бой')
-            self.target = self.send_message_with_target(
-                'is_battle_boss_MajorTrojanVirus', user_id, keyboard,
-                'Программа кажется абсолютно обычной, но стоит вам подойти ближе как перед вами возникает БОСС-Главный троянский вирус.')
-        elif self.isWin_AdWare and self.isWin_Clicker and not self.isWin_boss_Adware:
-            self.isBattle_boss_Adware = True
-            self.target = 'is_battle_boss_Adware'
-        else:
-            while True:
-                mini_boss = random.randint(0, 2)
-                if mini_boss == 0 and not self.isWin_DestructiveTrojanHorse:
-                    break
-                elif mini_boss == 1 and not self.isWin_AdWare:
-                    break
-                elif mini_boss == 2 and not self.isWin_Clicker:
-                    break
-            if mini_boss == 0:
-                self.isBattle_DestructiveTrojanHorse = True
-                keyboard = VkKeyboard()
-                keyboard.add_button('Напасть')
-                keyboard.add_line()
-                keyboard.add_button('Попытаться незаметно ускользнуть')
-                self.target = self.send_message_with_target(
-                    'is_battle_mini-boss_DestructiveTrojanHorse', user_id, keyboard,
-                    'Вы явно не самый везучий, ведь путь вам преградил не кто иной, как деструктивный троянский конь. В школе на занятиях по информатике вам рассказывали о самых распространённых компьютерных вирусах, поэтому ты легко опознал в существе врага')
-            elif mini_boss == 1:
-                self.isBattle_AdWare = True
-                keyboard = VkKeyboard()
-                keyboard.add_button('Бой')
-                self.target = self.send_message_with_target(
-                    'is_battle_mini-boss_AdWare', user_id, keyboard,
-                    'Наткнувшись на иконку браузера вы заметили возле него Рекламную программу считывающую полную информацию о вас')
-            elif mini_boss == 2:
-                self.isBattle_Clicker = True
-                keyboard = VkKeyboard()
-                keyboard.add_button('Бой')
-                self.target = self.send_message_with_target('is_battle_mini-boss_Clicker', user_id, keyboard, 'Перед вами появляется программа Кликер который занимается рассылкой спама, содержащий потенциально опасные приложения')
 
     def battle_DestructiveTrojanHorse(self, text, user_id):
         if self.target == 'is_battle_mini-boss_DestructiveTrojanHorse':

@@ -1,11 +1,62 @@
 import datetime
-import time
-
+import sqlite3
 import vk_api
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor, VkKeyboardButton
 from vk_api.longpoll import VkLongPoll, VkEventType
 from User import User
 import os
+
+
+def check_if_exists(user_id):
+    c.execute('SELECT * FROM users_game_bot_VK WHERE user_id = %d' % user_id)
+    result = c.fetchone()
+    if result is None:
+        return False
+    return True
+
+def register_new_user(user_id):
+    c.execute(
+        'INSERT INTO users_game_bot_VK(user_id, target, isWin_boss_lossing, isWin_boss_MajorTrojanVirus, target_return_to_mini_boss) VALUES (%d, "start", %d, %d, "")' % (user_id, 0, 0))
+    conn.commit()
+
+def saved_in_bd(user_id, target, isWin_boss_lossing, isWin_boss_MajorTrojanVirus, target_return_to_mini_boss):
+    c.execute('UPDATE users_game_bot_VK SET target="%s", isWin_boss_lossing=%d, isWin_boss_MajorTrojanVirus=%d, target_return_to_mini_boss="%s" WHERE user_id=%d' % (target, isWin_boss_lossing, isWin_boss_MajorTrojanVirus, target_return_to_mini_boss, user_id))
+    conn.commit()
+    print('Saved!')
+
+def set_target(user_id):
+    c.execute('SELECT target FROM users_game_bot_VK WHERE user_id = %d' % user_id)
+    result = c.fetchone()
+    print(result[0])
+    return result[0]
+
+def set_isWin_boss_MajorTrojanVirus(user_id):
+    c.execute('SELECT isWin_boss_MajorTrojanVirus FROM users_game_bot_VK WHERE user_id = %d' % user_id)
+    result = c.fetchone()
+    print(result[0])
+    if result[0] != 0:
+        return True
+    else:
+        return False
+
+def set_isWin_boss_lossing(user_id):
+    c.execute('SELECT isWin_boss_lossing FROM users_game_bot_VK WHERE user_id = %d' % user_id)
+    result = c.fetchone()
+    print(result[0])
+    if result[0] != 0:
+        return True
+    else:
+        return False
+
+def set_target_return_to_mini_boss(user_id):
+    c.execute('SELECT target_return_to_mini_boss FROM users_game_bot_VK WHERE user_id = %d' % user_id)
+    result = c.fetchone()
+    print(result[0])
+    return result[0]
+
+conn = sqlite3.connect('db.db')
+c = conn.cursor()
+
 
 token = 'vk1.a.2AHnn2z9Pgxy-nKeuPN6fgTyRuRHNk-w6LlQ6AwDdfV2ugW9Un6kVEm5DYdDWUa37xvCC0QZUSOJti-qFF-u6ZCqXGf62qUC9fmnxKZCk-CwRak2n2l1YiMFRZQYHEwQPevp2IZ1JpGidMJDOS7102lnTom8nS3XRJMNFvUubedPTLeR9CT2H93Hb3pJ6BiY'
 vk_session = vk_api.VkApi(token=token)
@@ -21,11 +72,15 @@ while True:
                 text = event.text
                 user_id = event.user_id
 
-                if user_id not in dict_targets.keys():
+
+                if not check_if_exists(user_id):
+                    register_new_user(user_id)
                     dict_targets[user_id] = User(vk_bot)
                     print('\nНовый игрок: {}'.format(user_id))
                 else:
                     print('\nИгрок: {}'.format(user_id))
+                    dict_targets[user_id] = User(vk_bot, set_target(user_id), isWin_boss_lossing=set_isWin_boss_lossing(user_id) ,isWin_boss_MajorTrojanVirus=set_isWin_boss_MajorTrojanVirus(user_id), target_return_to_mini_boss=set_target_return_to_mini_boss(user_id))
+
                 if dict_targets[user_id].target == 'start':
                     try:
                         # отправляем фотку(ниже 1 скрин)
@@ -98,27 +153,27 @@ while True:
                         'is_battle_mini-boss_DestructiveTrojanHorse', user_id, keyboard,
                         'Вы явно не самый везучий, ведь путь вам преградил не кто иной, как деструктивный троянский конь. '
                         'В школе на занятиях по информатике вам рассказывали о самых распространённых компьютерных вирусах, поэтому ты легко опознал в существе врага')
-                elif dict_targets[user_id].isBattle_DestructiveTrojanHorse: # здесь происходит битва с Деструктивный троянский конь
+                elif dict_targets[user_id].target == 'is_battle_mini-boss_DestructiveTrojanHorse' or dict_targets[user_id].target == 'is_battle_mini-boss_DestructiveTrojanHorse_choice': # здесь происходит битва с Деструктивный троянский конь
                     dict_targets[user_id].battle_DestructiveTrojanHorse(text, user_id)
 
                 #1 босс - Главный троянский вирус
-                elif dict_targets[user_id].isBattle_boss_MajorTrojanVirus: #здесь происходит битва с БОСС - Главный троянский вирус
+                elif dict_targets[user_id].target == 'boss_1' or dict_targets[user_id].target == 'is_battle_boss_MajorTrojanVirus' or dict_targets[user_id].target == 'is_battle_boss_MajorTrojanVirus_choice' or dict_targets[user_id].target == 'Запуск антивируса для удаления остатков коней': #здесь происходит битва с БОСС - Главный троянский вирус
                     dict_targets[user_id].battle_boss_MajorTrojanVirus(text, user_id)
 
                 # встреча с человеком(обучение)
-                elif dict_targets[user_id].is_meeting_with_a_person:
+                elif dict_targets[user_id].target == 'meeting_with_a_person' or dict_targets[user_id].target == 'Выбрать_от_1_до_3' or dict_targets[user_id].target == 'Дальнейшее развитие' or dict_targets[user_id].target == 'Что для этого нужно?' or dict_targets[user_id].target == 'И где находится эта папка?':
                     dict_targets[user_id].meeting_with_a_person(user_id, text)
 
                 #2 босс - Руткит
-                elif dict_targets[user_id].isBattle_Rootkit:
+                elif dict_targets[user_id].target == 'mini-boss_Rootkit' or dict_targets[user_id].target == 'mini-boss_Rootkit_choice':
                     dict_targets[user_id].battle_Rootkit(user_id=user_id, text=text)
 
                 # проигрышный босс Спуфер
-                elif dict_targets[user_id].isBattle_boss_lossing:
+                elif dict_targets[user_id].target == 'boss_lossing' or dict_targets[user_id].target == 'boss_lossing_choice' or dict_targets[user_id].target == 'boss_lossing_choice_2':
                     dict_targets[user_id].battle_lossing_boss(user_id=user_id, text=text)
 
                 #3 мини-босс - Клавиатурный шпион
-                elif dict_targets[user_id].isBattle_KeyLogger:
+                elif dict_targets[user_id].target == 'mini_boss_KeyLogger' or dict_targets[user_id].target == 'mini_boss_KeyLogger_choice' or dict_targets[user_id].target == 'mini_boss_KeyLogger_choice_2':
                     dict_targets[user_id].battle_KeyLogger(user_id=user_id, text=text)
 
                 #заканчивает игру
@@ -130,7 +185,11 @@ while True:
                     keyboard.add_button('Начать заново')
                     dict_targets[user_id].send_message(user_id, keyboard, 'Напишите что-нибудь, чтобы начать заново игру!')
 
+
                 print('Текущий checkpoint: {}'.format(dict_targets[user_id].target))
                 print('Время: {}'.format(datetime.datetime.now()))
+
+                saved_in_bd(user_id, dict_targets[user_id].target, dict_targets[user_id].isWin_boss_lossing, dict_targets[user_id].isWin_boss_MajorTrojanVirus, dict_targets[user_id].target_return_to_mini_boss)
+
         except Exception as exc:
             print('Возникла ошибка {}'.format(exc))
