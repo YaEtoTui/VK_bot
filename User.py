@@ -364,22 +364,12 @@ class User():
                 self.send_message_not_buttons(user_id, '3. Буду использовать спам-фильтр ')
                 self.target = self.send_message_with_target('boss_lossing_choice_2', user_id, keyboard, '4. Везде буду использовать один и тот же пароль')
             elif text == 'Закончить игру':
-                # заканчиваем игру
-                # доработать !!!!!!!!
-                self.target = 'the_end'
+                keyboard = VkKeyboard()
+                keyboard.add_button('Продолжить')
+                self.target = self.send_message_with_target('the_end', user_id, keyboard, 'Вы закончили игру! Нажмите, чтобы продолжить')
         elif self.target == 'boss_lossing_choice_2':
             if text == '1' or text == '3':
-                # Победа!!
                 self.isWin_boss_lossing = True
-
-                # доработать, при каждом добавлении мини-босса
-                # if self.target_return_to_mini_boss == 'is_battle_mini-boss_DestructiveTrojanHorse':
-                #     self.isBattle_DestructiveTrojanHorse = True
-                # elif self.target_return_to_mini_boss == 'mini-boss_Rootkit':
-                #     self.isBattle_Rootkit = True
-                # elif self.target_return_to_mini_boss == 'mini_boss_KeyLogger':
-                #     self.isBattle_KeyLogger = True
-
                 keyboard = VkKeyboard()
                 keyboard.add_button('Продолжить')
                 self.target = self.send_message_with_target(self.target_return_to_mini_boss, user_id, keyboard, 'Прекрасно! Вы справились с шпионом на вашем компьютере и можете продолжить свой путь.')
@@ -403,7 +393,8 @@ class User():
         elif self.target == 'mini_boss_KeyLogger_choice':
             if text == '1':
                 # убежали
-                self.target = 'the_end'
+                #Продолжение сюжета, пока ничего не произойдёт
+                pass
             elif text == '2' or text == 'Начать бой сначала':
                 keyboard = VkKeyboard()
                 keyboard.add_button('1')
@@ -422,7 +413,7 @@ class User():
                 self.target = self.send_message_with_target('mini_boss_KeyLogger_choice_2', user_id, keyboard, '4. Обновлю систему и программные продукты и в будущем буду делать так регулярно')
         elif self.target == 'mini_boss_KeyLogger_choice_2':
             if text == '1' or text == '4':
-                # ждём продолжения сюжета
+                # ждём продолжения сюжета, пока вернет обратно к началу
                 keyboard = VkKeyboard()
                 keyboard.add_button('Продолжить')
                 self.target = self.send_message_with_target('the_end', user_id, keyboard, 'К огромному сожалению вируса, вам удалось перекрыть ему доступ к данным, так что делать ему здесь больше нечего и он просто быстро уполз ')

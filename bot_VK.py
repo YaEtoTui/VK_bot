@@ -51,6 +51,11 @@ def set_target_return_to_mini_boss(user_id):
     result = c.fetchone()
     return result[0]
 
+def delete_saved_data(user_id):
+    c.execute('DELETE FROM users_game_bot_VK WHERE user_id=%d' % user_id)
+    conn.commit()
+    print('Удалены сохранения')
+
 conn = sqlite3.connect('db.db')
 c = conn.cursor()
 
@@ -172,11 +177,10 @@ while True:
                 #заканчивает игру
                 elif dict_targets[user_id].target == 'the_end':
                     # заканчиваем игру и начинаем заново
-                    dict_targets[user_id] = User(vk_bot)
-                    dict_targets[user_id].target = 'start'
+                    delete_saved_data(user_id)
                     keyboard = VkKeyboard()
                     keyboard.add_button('Начать заново')
-                    dict_targets[user_id].send_message(user_id, keyboard, 'Напишите что-нибудь, чтобы начать заново игру!')
+                    dict_targets[user_id].send_message(user_id, keyboard, 'Нажмите кнопку, чтобы начать игру заново!')
 
 
                 print('Текущий checkpoint: {}'.format(dict_targets[user_id].target))
