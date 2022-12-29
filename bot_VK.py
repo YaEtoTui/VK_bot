@@ -56,7 +56,7 @@ def delete_saved_data(user_id):
     conn.commit()
     print('Удалены сохранения')
 
-conn = sqlite3.connect('db.db')
+conn = sqlite3.connect('database.db')
 c = conn.cursor()
 
 token = 'vk1.a.2AHnn2z9Pgxy-nKeuPN6fgTyRuRHNk-w6LlQ6AwDdfV2ugW9Un6kVEm5DYdDWUa37xvCC0QZUSOJti-qFF-u6ZCqXGf62qUC9fmnxKZCk-CwRak2n2l1YiMFRZQYHEwQPevp2IZ1JpGidMJDOS7102lnTom8nS3XRJMNFvUubedPTLeR9CT2H93Hb3pJ6BiY'
