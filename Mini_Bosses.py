@@ -221,8 +221,9 @@ def battle_KeyLogger(self, text, user_id):
     elif self.target == 'mini_boss_KeyLogger_choice':
         if text == '1':
             # убежали
-            # Продолжение сюжета, пока ничего не произойдёт
-            pass
+            keyboard = VkKeyboard()
+            keyboard.add_button('Продолжить')
+            self.target = self.send_message_with_target('mini_boss_Hijacker', user_id, keyboard, 'Вам удалось сбежать от клавиатурного шпиона')
         elif text == '2' or text == 'Начать бой сначала':
             keyboard = VkKeyboard()
             keyboard.add_button('1')
@@ -243,10 +244,9 @@ def battle_KeyLogger(self, text, user_id):
                                                         '4. Обновлю систему и программные продукты и в будущем буду делать так регулярно')
     elif self.target == 'mini_boss_KeyLogger_choice_2':
         if text == '1' or text == '4':
-            # ждём продолжения сюжета, пока вернет обратно к началу
             keyboard = VkKeyboard()
             keyboard.add_button('Продолжить')
-            self.target = self.send_message_with_target('the_end', user_id, keyboard,
+            self.target = self.send_message_with_target('mini_boss_Hijacker', user_id, keyboard,
                                                         'К огромному сожалению вируса, вам удалось перекрыть ему доступ к данным, так что делать ему здесь больше нечего и он просто быстро уполз ')
         elif text == '2':
             if not self.isWin_boss_lossing:
@@ -275,4 +275,209 @@ def battle_KeyLogger(self, text, user_id):
         elif text == 'Подсказка':
             self.send_message_not_buttons(user_id,
                                           '(Клавиатурный шпион(KeyLogger)- это отслеживание нажатий каждой клавиши клавиатуры, поэтому ввод паролей на незащищенных сайтах и ввод его в ручную является грубой ошибкой при пользовании устройством)')
+    return self
+
+def battle_Hijacker(self, text, user_id):
+    if self.target == 'mini_boss_Hijacker':
+        if text == 'Продолжить' or text == 'Начать бой сначала':
+            keyboard = VkKeyboard()
+            keyboard.add_button('1')
+            keyboard.add_button('2')
+            keyboard.add_line()
+            keyboard.add_button('3')
+            keyboard.add_button('4')
+            if text == 'Начать бой сначала':
+                keyboard.add_line()
+                keyboard.add_button('Подсказка')
+            else:
+                self.send_message_not_buttons(user_id, 'До вашей цели осталось всего лишь повернуть за угол. И вот вы уже воодушевлены и готовы к встрече с новыми '
+                                                       'противниками, как вдруг что-то хватает вас за ногу и резко тянет назад. Вы падаете, и нечто утягивает вас в расщелину, '
+                                                       'не замеченную вами ранее. Как оказалось, вы слишком рано переключились на мысли о своих дальнейших действиях и не '
+                                                       'обратили внимание на осторожно ползущие за вами щупальца хиджакера. Ваша легкомысленность приводит к тому, что, '
+                                                       'находясь в нескольких шагах от заветной папки, вы оказались затянуты очередным вирусом в недра компьютера, внешне '
+                                                       'напоминающие чащу леса. Оглядев своё новое местоположение, чуть поодаль вы увидели иконку браузера, из чего вами был '
+                                                       'сделан вывод, что вирус пришёл из Интернета.')
+                self.send_message_not_buttons(user_id, 'Сам же монстр наконец предстал перед вами во всей красе, и вы снова оказались перед непростым выбором: каким же образом вступить с противником в бой')
+            self.send_message_not_buttons(user_id, '1. Удалить браузер')
+            self.send_message_not_buttons(user_id, '2. Удалить в браузере все ненужных и подозрительных инструментов и расширений')
+            self.send_message_not_buttons(user_id, '3. Поменять основной браузер на другой')
+            self.target = self.send_message_with_target('mini_boss_Hijacker_choice', user_id, keyboard,
+                                                        '4. Сбросить настройки поисковой системы')
+    elif self.target == 'mini_boss_Hijacker_choice':
+        if text == '2':
+            keyboard = VkKeyboard()
+            keyboard.add_button('Продолжить')
+            self.target = self.send_message_with_target('mini_boss_AdWare', user_id, keyboard,
+                                                        'Поздравляем, удаление инструментов и расширений сработало, и враг оказался повержен!')
+        elif text == '1':
+            if not self.isWin_boss_lossing:
+                self.target_return_to_mini_boss = 'mini_boss_Hijacker'
+                keyboard = VkKeyboard()
+                keyboard.add_button('Продолжить')
+                self.target = self.send_message_with_target('boss_lossing', user_id, keyboard,
+                                                            'Простое удаление не всегда решает проблему, а особенно, если эта проблема способна наносить такие удары, как те, что полетели в вас')
+            else:
+                keyboard = VkKeyboard()
+                keyboard.add_button('Начать бой сначала')
+                self.target = self.send_message_with_target('mini_boss_KeyLogger_choice', user_id, keyboard,
+                                                            'Простое удаление не всегда решает проблему, а особенно, если эта проблема способна наносить такие удары, как те, что полетели в вас')
+        elif text == '3':
+            if not self.isWin_boss_lossing:
+                self.target_return_to_mini_boss = 'mini_boss_Hijacker'
+                keyboard = VkKeyboard()
+                keyboard.add_button('Продолжить')
+                self.target = self.send_message_with_target('boss_lossing', user_id, keyboard,
+                                                            'Похоже, что дело не в простой смене браузера, ведь монстр уже успел уложить вас на лопатки')
+            else:
+                keyboard = VkKeyboard()
+                keyboard.add_button('Начать бой сначала')
+                self.target = self.send_message_with_target('mini_boss_KeyLogger_choice', user_id, keyboard,
+                                                            'Похоже, что дело не в простой смене браузера, ведь монстр уже успел уложить вас на лопатки')
+        elif text == '4':
+            if not self.isWin_boss_lossing:
+                self.target_return_to_mini_boss = 'mini_boss_Hijacker'
+                keyboard = VkKeyboard()
+                keyboard.add_button('Продолжить')
+                self.target = self.send_message_with_target('boss_lossing', user_id, keyboard,
+                                                            'Принятое вами решение не возымело успеха, а время было утрачено, и удар Хиджакера вам отразить не удалось')
+            else:
+                keyboard = VkKeyboard()
+                keyboard.add_button('Начать бой сначала')
+                self.target = self.send_message_with_target('mini_boss_KeyLogger_choice', user_id, keyboard,
+                                                            'Принятое вами решение не возымело успеха, а время было утрачено, и удар Хиджакера вам отразить не удалось ')
+        elif text == 'Подсказка':
+            self.send_message_not_buttons(user_id,
+                                          '(Подсказка: Хиджакер может изменить поисковую систему по умолчанию и домашнюю страницу, замедлить загрузку веб-страниц, установить несколько панелей инструментов без разрешения пользователя и создать несколько контекстных предупреждений для рекламы)')
+    return self
+
+def battle_AdWare(self, text, user_id):
+    if self.target == 'mini_boss_AdWare':
+        if text == 'Продолжить':
+            keyboard = VkKeyboard()
+            keyboard.add_button('Бой!')
+            self.send_message_with_target('mini_boss_AdWare_choice', user_id, keyboard, 'Заинтересовавшись замеченной ранее иконкой, вы подошли туда. Конечно же, с вашей сегодняшней удачей около браузера вы заметили Рекламную программу считывающую полную информацию о вас, не спросив у вас разрешения. Так не годится!')
+    elif self.target == 'mini_boss_AdWare_choice':
+        if text == 'Бой!' or text == 'Попробовать ещё раз':
+            keyboard = VkKeyboard()
+            keyboard.add_button('1')
+            keyboard.add_button('2')
+            keyboard.add_button('3')
+            if text == 'Попробовать ещё раз':
+                keyboard.add_line()
+                keyboard.add_button('Подсказка')
+            else:
+                self.send_message_not_buttons(user_id, 'Недолго думая, вы решили настоятельно уничтожить программу')
+            self.send_message_not_buttons(user_id, '1. Удалить браузер')
+            self.send_message_not_buttons(user_id, '2. Использовать панель управления для удаления вредоносного ПО')
+            self.target = self.send_message_with_target('mini_boss_AdWare_choice_2', user_id, keyboard, '3. Сбросить все настройки браузера, обнулить операционную систему')
+
+    elif self.target == 'mini_boss_AdWare_choice_2':
+        if text == '2':
+            keyboard = VkKeyboard()
+            keyboard.add_button('Продолжить')
+            self.target = self.send_message_with_target('mini_boss_Clicker', user_id, keyboard,
+                                                        'Да! Вы решили совершенно верно, и уже через секунду вирус пропал, будто его никогда и не было')
+        elif text == '1':
+            keyboard = VkKeyboard()
+            keyboard.add_button('Попробовать ещё раз')
+            self.target = self.send_message_with_target('mini_boss_AdWare_choice', user_id, keyboard,
+                                                            'Самый простой способ — не всегда самый верный')
+        elif text == '3':
+            keyboard = VkKeyboard()
+            keyboard.add_button('Попробовать ещё раз')
+            self.target = self.send_message_with_target('mini_boss_AdWare_choice', user_id, keyboard,
+                                                            'Можно и компьютер сразу разбить, тогда проблем точно не будет')
+        elif text == 'Подсказка':
+            self.send_message_not_buttons(user_id,
+                                          'Подсказка: Рекламная программа (AdWare, SpyWare) — программа для демонстрации рекламных окон, открытия рекламируемых сайтов. Помимо этого может следить за действиями пользователя (посещенные сайты, введенные строки для поиска) и работать совместно с другими вредоносными программами')
+    return self
+
+def battle_Clicker(self, text, user_id):
+    if self.target == 'mini_boss_Clicker':
+        if text == 'Продолжить':
+            keyboard = VkKeyboard()
+            keyboard.add_button('Опознать врага')
+            self.send_message_with_target('mini_boss_Clicker_recognize', user_id, keyboard, 'И так как рекламная программа была удалена, вы решили следовать дальше, но ваши поиски верного пути в очередной раз были прерваны появлением нового врага.')
+    elif self.target == 'mini_boss_Clicker_recognize':
+        if text == 'Опознать врага':
+            keyboard = VkKeyboard()
+            keyboard.add_button('Бой!')
+            self.send_message_with_target('mini_boss_Clicker_choice', user_id, keyboard, 'Перед вами появляется программа Кликер, которая занимается рассылкой спама, содержащий потенциально опасные приложения. И похоже, что он не особо рад вашему присутствию')
+    elif self.target == 'mini_boss_Clicker_choice':
+        if text == 'Бой!' or text == 'Попробовать ещё раз':
+            keyboard = VkKeyboard()
+            keyboard.add_button('1')
+            keyboard.add_button('2')
+            keyboard.add_button('3')
+            if text == 'Попробовать ещё раз':
+                keyboard.add_line()
+                keyboard.add_button('Подсказка')
+            self.send_message_not_buttons(user_id, '1. Удалить весь спам собственноручно')
+            self.send_message_not_buttons(user_id, '2. Установить утилиту против кликера')
+            self.target = self.send_message_with_target('mini_boss_Clicker_choice_2', user_id, keyboard, '3. Сообщить всем своим контактам, что ваши сообщения спам')
+
+    elif self.target == 'mini_boss_Clicker_choice_2':
+        if text == '2':
+            keyboard = VkKeyboard()
+            keyboard.add_button('Продолжить')
+            self.target = self.send_message_with_target('unknown_file', user_id, keyboard,
+                                                        'Конечно, пусть за нас работают специальные программы, а мы не будем сильно останавливаться на этом и двинемся дальше')
+        elif text == '1':
+            keyboard = VkKeyboard()
+            keyboard.add_button('Попробовать ещё раз')
+            self.target = self.send_message_with_target('mini_boss_Clicker_choice', user_id, keyboard,
+                                                            'К сожалению, у нас не так много времени, да и это не избавляет от корня проблемы, подумайте ещё ')
+        elif text == '3':
+            keyboard = VkKeyboard()
+            keyboard.add_button('Попробовать ещё раз')
+            self.target = self.send_message_with_target('mini_boss_Clicker_choice', user_id, keyboard,
+                                                            'Ну тут мы можем засесть на неделю, так что не самый действенный вариант, может попробуем что-то другое?')
+        elif text == 'Подсказка':
+            self.send_message_not_buttons(user_id,
+                                          'Подсказка: Кликер (Clicker) — программа, для накручивания счетчиков (посещения страниц, показа баннеров), увеличения популярности сайта в поисковиках, несанкционированно использует ресурсы компьютера, увеличивает трафик, тем самым приводят к нарушению работы ЭВМ или их сети.')
+    return self
+
+def unknown_file(self, text, user_id):
+    if self.target == 'unknown_file':
+        if text == 'Продолжить':
+            keyboard = VkKeyboard()
+            keyboard.add_button('Опознать врага')
+            self.send_message_with_target('mini_boss_Clicker_recognize', user_id, keyboard, 'И так как рекламная программа была удалена, вы решили следовать дальше, но ваши поиски верного пути в очередной раз были прерваны появлением нового врага.')
+    elif self.target == 'mini_boss_Clicker_recognize':
+        if text == 'Опознать врага':
+            keyboard = VkKeyboard()
+            keyboard.add_button('Бой!')
+            self.send_message_with_target('mini_boss_Clicker_choice', user_id, keyboard, 'Перед вами появляется программа Кликер, которая занимается рассылкой спама, содержащий потенциально опасные приложения. И похоже, что он не особо рад вашему присутствию')
+    elif self.target == 'mini_boss_Clicker_choice':
+        if text == 'Бой!' or text == 'Попробовать ещё раз':
+            keyboard = VkKeyboard()
+            keyboard.add_button('1')
+            keyboard.add_button('2')
+            keyboard.add_button('3')
+            if text == 'Попробовать ещё раз':
+                keyboard.add_line()
+                keyboard.add_button('Подсказка')
+            self.send_message_not_buttons(user_id, '1. Удалить весь спам собственноручно')
+            self.send_message_not_buttons(user_id, '2. Установить утилиту против кликера')
+            self.target = self.send_message_with_target('mini_boss_Clicker_choice_2', user_id, keyboard, '3. Сообщить всем своим контактам, что ваши сообщения спам')
+
+    elif self.target == 'mini_boss_Clicker_choice_2':
+        if text == '2':
+            keyboard = VkKeyboard()
+            keyboard.add_button('Продолжить')
+            self.target = self.send_message_with_target('', user_id, keyboard,
+                                                        'Конечно, пусть за нас работают специальные программы, а мы не будем сильно останавливаться на этом и двинемся дальше')
+        elif text == '1':
+            keyboard = VkKeyboard()
+            keyboard.add_button('Попробовать ещё раз')
+            self.target = self.send_message_with_target('mini_boss_Clicker_choice', user_id, keyboard,
+                                                            'К сожалению, у нас не так много времени, да и это не избавляет от корня проблемы, подумайте ещё ')
+        elif text == '3':
+            keyboard = VkKeyboard()
+            keyboard.add_button('Попробовать ещё раз')
+            self.target = self.send_message_with_target('mini_boss_Clicker_choice', user_id, keyboard,
+                                                            'Ну тут мы можем засесть на неделю, так что не самый действенный вариант, может попробуем что-то другое?')
+        elif text == 'Подсказка':
+            self.send_message_not_buttons(user_id,
+                                          'Подсказка: Кликер (Clicker) — программа, для накручивания счетчиков (посещения страниц, показа баннеров), увеличения популярности сайта в поисковиках, несанкционированно использует ресурсы компьютера, увеличивает трафик, тем самым приводят к нарушению работы ЭВМ или их сети.')
     return self

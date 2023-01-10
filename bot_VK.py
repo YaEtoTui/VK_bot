@@ -174,6 +174,18 @@ while True:
                 elif dict_targets[user_id].target == 'mini_boss_KeyLogger' or dict_targets[user_id].target == 'mini_boss_KeyLogger_choice' or dict_targets[user_id].target == 'mini_boss_KeyLogger_choice_2':
                     dict_targets[user_id].battle_KeyLogger(user_id=user_id, text=text)
 
+                # 4 мини-босс - Хиджакер
+                elif dict_targets[user_id].target == 'mini_boss_Hijacker' or dict_targets[user_id].target == 'mini_boss_Hijacker_choice':
+                    dict_targets[user_id].battle_Hijacker(user_id=user_id, text=text)
+
+                # 5 мини-босс - Рекламная программа
+                elif dict_targets[user_id].target == 'mini_boss_AdWare' or dict_targets[user_id].target == 'mini_boss_AdWare_choice' or dict_targets[user_id].target == 'mini_boss_AdWare_choice_2':
+                    dict_targets[user_id].battle_Hijacker(user_id=user_id, text=text)
+
+                # 6 мини-босс - Кликер
+                elif dict_targets[user_id].target == 'mini_boss_Clicker' or dict_targets[user_id].target == 'mini_boss_Clicker_recognize' or dict_targets[user_id].target == 'mini_boss_Clicker_choice' or dict_targets[user_id].target == 'mini_boss_Clicker_choice_2':
+                    dict_targets[user_id].battle_Hijacker(user_id=user_id, text=text)
+
                 #заканчивает игру
                 elif dict_targets[user_id].target == 'the_end':
                     # заканчиваем игру и начинаем заново

@@ -224,79 +224,17 @@ class User():
     def battle_KeyLogger(self, text, user_id):
         Mini_Bosses.battle_KeyLogger(self, text, user_id)
 
-    #с сюжетом доработать включая задержку
-    def battle_AdWare(self, text, user_id):
-        if self.target == 'mini_boss_2':
-            keyboard = VkKeyboard()
-            keyboard.add_button('Бой')
-            self.target = self.send_message_with_target('is_battle_mini-boss_AdWare', user_id, keyboard, 'Наткнувшись на иконку браузера вы заметили возле него '
-                                                                                                         'Рекламную программу считывающую полную информацию о вас')
-        elif self.target == 'is_battle_mini-boss_AdWare':
-            if text == 'Бой' or text == 'Начать бой сначала':
-                keyboard = VkKeyboard()
-                keyboard.add_button('1')
-                keyboard.add_button('2')
-                keyboard.add_button('3')
-                if text == 'Начать бой сначала':
-                    keyboard.add_line()
-                    keyboard.add_button('Подсказка')
-                else:
-                    self.send_message_not_buttons(user_id, 'Недолго думая вы решили настоятельно уничтожить программу')
-                self.send_message_not_buttons(user_id, '1. Удалить браузер')
-                self.send_message_not_buttons(user_id, '2. Использовать панель управления для удаления вредоносного ПО')
-                self.send_message(user_id, keyboard, '3. Сбросить все настройки браузера, обнулить операционную систему')
-            elif text == '2':
-                self.isBattle_AdWare = False
-                self.isWin_AdWare = True
-                self.isBattle_Clicker = True
-                keyboard = VkKeyboard()
-                keyboard.add_button('Опознать врага')
-                self.target = self.send_message_with_target('Опознать врага', user_id, keyboard, 'Рекламная программа была удалена, вы решили следовать дальше.\n'
-                                                                                              'Ваши поиски прерывает новый враг')
-            elif text == '1' or text == '3':
-                keyboard = VkKeyboard()
-                keyboard.add_button('Начать бой сначала')
-                self.send_message(user_id, keyboard,  'Вы проиграли но не отчаивайтесь у вас есть еще один шанс. “Никогда не сдавайся перед трудностями. Все проблемы в жизни проверяют наш характер и делают нас сильнее.”')
-            elif text == 'Подсказка':
-                self.send_message_not_buttons(user_id, 'Программа для демонстрации рекламных окон, открытия рекламируемых сайтов. Помимо этого может следить за действиями пользователя (посещенные сайты, введенные строки для поиска) и работать совместно с другими вредоносными программами.')
+    def battle_Hijacker(self, text, user_id):
+        Mini_Bosses.battle_Hijacker(self, text, user_id)
 
-    #с сюжетом доработать включая задержку
+    def battle_AdWare(self, text, user_id):
+        Mini_Bosses.battle_AdWare(self, text, user_id)
+
     def battle_Clicker(self, text, user_id):
-        if self.target == 'Опознать врага':
-            keyboard = VkKeyboard()
-            keyboard.add_button('Бой')
-            self.target = self.send_message_with_target('is_battle_mini-boss_Clicker', user_id, keyboard, 'Перед вами появляется программа Кликер который занимается '
-                                                                                                          'рассылкой спама, содержащий потенциально опасные приложения')
-        elif self.target == 'is_battle_mini-boss_Clicker':
-            if text == 'Бой' or text == 'Начать бой сначала':
-                keyboard = VkKeyboard()
-                keyboard.add_button('1')
-                keyboard.add_button('2')
-                keyboard.add_button('3')
-                if text == 'Начать бой сначала':
-                    keyboard.add_line()
-                    keyboard.add_button('Подсказка')
-                else:
-                    self.send_message_not_buttons(user_id, 'Кликер не особо рад вашему присутствию')
-                self.send_message_not_buttons(user_id, '1. Удалить весь спам собственноручно')
-                self.send_message_not_buttons(user_id, '2. Установить утилиту против кликера')
-                self.send_message(user_id, keyboard, '3. Написать товарищам, что ваши сообщения спам')
-            elif text == '2':
-                self.isWin_Clicker = True
-                self.isBattle_Clicker = False
-                self.isBattle_boss_Adware = True
-                keyboard = VkKeyboard()
-                keyboard.add_button('Продолжить')
-                self.target = self.send_message_with_target('is_battle_boss_Adware', user_id, keyboard, 'Кликер был уничтожен')
-            elif text == '1' or text == '3':
-                keyboard = VkKeyboard()
-                keyboard.add_button('Начать бой сначала')
-                self.send_message(user_id, keyboard, 'Вы проиграли но не отчаивайтесь у вас есть еще один шанс. '
-                                                   '“Никогда не сдавайся перед трудностями. Все проблемы в жизни проверяют наш характер и делают нас сильнее.”')
-            elif text == 'Подсказка':
-                self.send_message_not_buttons(user_id, 'Программа, для накручивания счетчиков (посещения страниц, показа баннеров), увеличения популярности сайта в '
-                                                       'поисковиках, несанкционированно использует ресурсы компьютера, увеличивает трафик, тем самым приводят '
-                                                       'к нарушению работы ЭВМ или их сети.')
+        Mini_Bosses.battle_Clicker(self, text, user_id)
+
+    def unknown_file(self, text, user_id):
+        Mini_Bosses.unknown_file(self, text, user_id)
 
     # не доделан босс снизу boss_Adware
     #с сюжетом доработать включая задержку
