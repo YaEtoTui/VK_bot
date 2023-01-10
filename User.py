@@ -239,38 +239,5 @@ class User():
     def battle_RAT(self, text, user_id):
         Mini_Bosses.battle_RAT(self, text, user_id)
 
-    # не доделан босс снизу boss_Adware
-    #с сюжетом доработать включая задержку
-    def battle_boss_Adware(self, text, user_id):
-        if self.target == 'is_battle_boss_Adware':
-            if text == 'Продолжить' or text == 'Начать бой сначала' or text == 'Продолжить':
-                keyboard = VkKeyboard()
-                keyboard.add_button('1')
-                keyboard.add_button('2')
-                keyboard.add_button('3')
-                if text == 'Начать бой сначала':
-                        keyboard.add_line()
-                        keyboard.add_button('Подсказка')
-                else:
-                    self.send_message_not_buttons(user_id, 'После сражений перед вами появляются все рекламные вирусы. '
-                                                           'Вы решили использовать полученные знания, но ваши попытки были тщетны, '
-                                                           'этот босс оказался не так прост.')
-                self.send_message_not_buttons(user_id, '1. Сброс настроек и удаление вредоностного ПО')
-                self.send_message_not_buttons(user_id, '2. Удалить вирусы по одному')
-                self.send_message(user_id, keyboard, '3. Установить новый браузер')
-            if text == '1':
-                self.isBattle_boss_Adware = False
-                self.isWin_boss_Adware = True
-                #дополнить, когда появятся новые боссы и мини-боссы
-                self.text_total_information += self.__text_information_boss_Adware
-                keyboard = VkKeyboard()
-                keyboard.add_button('Продолжить')
-                self.target = self.send_message_with_target('the_end', user_id, keyboard, 'Поздравляем! Все рекламные вирусы были удалены с устройства.\n'
-                                                                                                  'Теперь вы можете увидеть всю информацию о вирусе, нажавав кнопку "Общая информация"')
-            elif text == '2' and text == '3':
-                keyboard = VkKeyboard()
-                keyboard.add_button('Начать бой сначала')
-                self.send_message(user_id, keyboard, 'Вы проиграли но не отчаивайтесь у вас есть еще один шанс. '
-                                                       '“Никогда не сдавайся перед трудностями. Все проблемы в жизни проверяют наш характер и делают нас сильнее.”')
-            elif text == 'Подсказка':
-                self.send_message_not_buttons(user_id, 'Программы-рекламы, без ведома пользователей встраиваются в различное программное обеспечение с целью демонстрации рекламных объявлений. Как правило, программы-рекламы встроены в программное обеспечение, распространяющееся бесплатно. Реклама располагается в рабочем интерфейсе. Данные программы также собирают и переправляют своему разработчику персональную информацию о пользователе.')
+    def battle_Zombie(self, text, user_id):
+        Mini_Bosses.battle_Zombie(self, text, user_id)

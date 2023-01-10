@@ -534,7 +534,7 @@ def battle_RAT(self, text, user_id):
         if text == '3':
             keyboard = VkKeyboard()
             keyboard.add_button('Продолжить')
-            self.target = self.send_message_with_target('', user_id, keyboard,
+            self.target = self.send_message_with_target('mini_boss_Zombie', user_id, keyboard,
                                                         'Поздравляем! Запрет подключения, действительно, избавил вас от этих вредоносных программ.')
         elif text == '2':
             if not self.isWin_boss_lossing:
@@ -563,4 +563,64 @@ def battle_RAT(self, text, user_id):
         elif text == 'Подсказка':
             self.send_message_not_buttons(user_id,
                                           '(Подсказка: Удаленный доступ не может предоставляться без вашего разрешения)')
+    return self
+
+def battle_Zombie(self, text, user_id):
+    if self.target == 'mini_boss_Zombie':
+        if text == 'Продолжить' or text == 'Начать бой сначала':
+            keyboard = VkKeyboard()
+            keyboard.add_button('1')
+            keyboard.add_button('2')
+            keyboard.add_line()
+            keyboard.add_button('3')
+            if text == 'Начать бой сначала':
+                keyboard.add_line()
+                keyboard.add_button('Подсказка')
+            else:
+                self.send_message_not_buttons(user_id,
+                                              'Вы уже успели подумать, что всё закончено и вы справились со всеми трудностями и преодолели все препятствия, как вдруг, раздался громкий нечеловеческий рёв.')
+                self.send_message_not_buttons(user_id,
+                                              'Разворачиваетесь на звук и только сейчас замечаете большое чудище, чем-то напоминающее двух предыдущих. Но размерами он превышал их вместе взятых.')
+                self.send_message_not_buttons(user_id,
+                                              'Вы вспомнили о том, что cmd предупреждал вас о наличии боссов, и решили, что это именно он.')
+                self.send_message_not_buttons(user_id,
+                                              'Сейчас вы понимаете, что до победы остался один шаг, и перед вами встаёт последний выбор, который повлияет на то, избавитесь ли вы окончательно от всех вредоносных программ или нет.')
+                self.send_message_not_buttons(user_id,
+                                              'Как будете бороться с врагом?')
+            self.send_message_not_buttons(user_id, '1. Полная переустановка системы ')
+            self.send_message_not_buttons(user_id, '2. Полное сканирование устройства с помощью антивируса и удаления временных файлов')
+            self.target = self.send_message_with_target('mini_boss_Zombie_choice', user_id, keyboard, '3. Считывание информации об утечке личных данных')
+    elif self.target == 'mini_boss_Zombie_choice':
+        if text == '2':
+            keyboard = VkKeyboard()
+            keyboard.add_button('Продолжить')
+            self.target = self.send_message_with_target('the_good_end', user_id, keyboard,
+                                                        'Поздравляем! Запрет подключения, действительно, избавил вас от этих вредоносных программ.')
+        elif text == '1':
+            if not self.isWin_boss_lossing:
+                self.target_return_to_mini_boss = 'mini_boss_Zombie'
+                keyboard = VkKeyboard()
+                keyboard.add_button('Продолжить')
+                self.target = self.send_message_with_target('boss_lossing', user_id, keyboard,
+                                                            'Боюсь, это не возымело действия, а вот зомби, в свою очередь, нанёс вам очень сильный удар')
+            else:
+                keyboard = VkKeyboard()
+                keyboard.add_button('Начать бой сначала')
+                self.target = self.send_message_with_target('mini_boss_Zombie', user_id, keyboard,
+                                                            'Боюсь, это не возымело действия, а вот зомби, в свою очередь, нанёс вам очень сильный удар')
+        elif text == '3':
+            if not self.isWin_boss_lossing:
+                self.target_return_to_mini_boss = 'mini_boss_Zombie'
+                keyboard = VkKeyboard()
+                keyboard.add_button('Продолжить')
+                self.target = self.send_message_with_target('boss_lossing', user_id, keyboard,
+                                                            'Вряд ли эта информация будет сейчас вам полезна. Но вот время, потраченное на считывание, позволило монстру наброситься на вас и в мгновение ока одолеть')
+            else:
+                keyboard = VkKeyboard()
+                keyboard.add_button('Начать бой сначала')
+                self.target = self.send_message_with_target('mini_boss_Zombie', user_id, keyboard,
+                                                            'Вряд ли эта информация будет сейчас вам полезна. Но вот время, потраченное на считывание, позволило монстру наброситься на вас и в мгновение ока одолеть')
+        elif text == 'Подсказка':
+            self.send_message_not_buttons(user_id,
+                                          '(Подсказка: найти вирус зомби не вооруженным глазом практически невозможно, но современные антивирусы способны избавиться от него)')
     return self

@@ -194,6 +194,31 @@ while True:
                 elif dict_targets[user_id].target == 'mini_boss_RAT' or dict_targets[user_id].target == 'mini_boss_RAT_choice':
                     dict_targets[user_id].battle_RAT(user_id=user_id, text=text)
 
+                # 3 босс - Зомби
+                elif dict_targets[user_id].target == 'mini_boss_Zombie' or dict_targets[user_id].target == 'mini_boss_Zombie_choice':
+                    dict_targets[user_id].battle_Zombie(user_id=user_id, text=text)
+
+                elif dict_targets[user_id].target == 'the_good_end':
+                    if text == 'Продолжить':
+                        keyboard = VkKeyboard()
+                        keyboard.add_button('Выбраться из устройства')
+                        dict_targets[user_id].send_message_not_buttons(user_id, 'После вашей победы открывается командная строка:')
+                        dict_targets[user_id].send_message_not_buttons(user_id, '«Ты большой молодец! Тебе удалось уничтожить главного врага. Доступ к твоим данным снова восстановлен, вирусы и их помощники исчезли. Ты можешь вернуться в свой мир, чтобы и дальше жить своей жизнью, но помни про ошибки, которые ты сделал. Думай, прежде чем устанавливать и скачивать неизвестные файлы на своё устройство. Полагаю нам пора прощаться.»')
+                        dict_targets[user_id].target = dict_targets[user_id].send_message_with_target('Выбраться из устройства', user_id, keyboard, 'После такой трогательной речи от вашего друга можно было проронить слезу, но вы сдерживаетесь и решаетесь на последний шаг в своем путешествии.')
+                elif dict_targets[user_id].target == 'Выбраться из устройства':
+                    if text == 'Выбраться из устройства':
+                        keyboard = VkKeyboard()
+                        keyboard.add_button('Ура!!')
+                        dict_targets[user_id].target = dict_targets[user_id].send_message_with_target('final_end', user_id, keyboard, 'Очнувшись в своей комнате, вы понимаете, что ваше приключение окончено и пора возвращаться к повседневной жизни, снова...')
+                elif dict_targets[user_id].target == 'final_end':
+                    if text == 'Ура!!':
+                        keyboard = VkKeyboard()
+                        keyboard.add_button('Завершить игру')
+                        dict_targets[user_id].send_message_not_buttons(user_id, 'Поздравляем, вы смогли справиться со всеми трудностями, уничтожили все вирусы, теперь на вашем устройстве воцарятся мир и процветание, а уровень ваших знаний значительно вырос!')
+                        dict_targets[user_id].send_message_not_buttons(user_id, 'Вы способны избавиться от вирусов самостоятельно. Главное, не стоит забывать, что самый простой выбор не всегда самый правильный. Также не бойтесь прибегать к уже  существующим устройствам для удаления вредоносных программ и защиты вашего компьютера, ведь не всегда у вас будет возможность самим залезть в устройство и победить всех врагов.')
+                        dict_targets[user_id].send_message_not_buttons(user_id, 'Все истории подходят к концу, и, к сожалению, эта не исключение, но, если у вас будут вопросы, вы всегда можете обратиться к другим источникам для получения новых знаний.')
+                        dict_targets[user_id].send_message_not_buttons(user_id, 'На этом моменте пора прощаться.')
+                        dict_targets[user_id].target = dict_targets[user_id].send_message_with_target('the_end', user_id, keyboard, 'Над квестом работала команда codEater.')
                 #заканчивает игру
                 elif dict_targets[user_id].target == 'the_end':
                     # заканчиваем игру и начинаем заново
