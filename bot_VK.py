@@ -180,11 +180,19 @@ while True:
 
                 # 5 мини-босс - Рекламная программа
                 elif dict_targets[user_id].target == 'mini_boss_AdWare' or dict_targets[user_id].target == 'mini_boss_AdWare_choice' or dict_targets[user_id].target == 'mini_boss_AdWare_choice_2':
-                    dict_targets[user_id].battle_Hijacker(user_id=user_id, text=text)
+                    dict_targets[user_id].battle_AdWare(user_id=user_id, text=text)
 
                 # 6 мини-босс - Кликер
                 elif dict_targets[user_id].target == 'mini_boss_Clicker' or dict_targets[user_id].target == 'mini_boss_Clicker_recognize' or dict_targets[user_id].target == 'mini_boss_Clicker_choice' or dict_targets[user_id].target == 'mini_boss_Clicker_choice_2':
-                    dict_targets[user_id].battle_Hijacker(user_id=user_id, text=text)
+                    dict_targets[user_id].battle_Clicker(user_id=user_id, text=text)
+
+                # 7 мини-босс - Шутка
+                elif dict_targets[user_id].target == 'unknown_file' or dict_targets[user_id].target == 'unknown_file_choice':
+                    dict_targets[user_id].unknown_file(user_id=user_id, text=text)
+
+                # 8 мини-босс - Программы Удалённого Администрирования
+                elif dict_targets[user_id].target == 'mini_boss_RAT' or dict_targets[user_id].target == 'mini_boss_RAT_choice':
+                    dict_targets[user_id].battle_RAT(user_id=user_id, text=text)
 
                 #заканчивает игру
                 elif dict_targets[user_id].target == 'the_end':

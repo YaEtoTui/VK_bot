@@ -439,45 +439,128 @@ def battle_Clicker(self, text, user_id):
 
 def unknown_file(self, text, user_id):
     if self.target == 'unknown_file':
-        if text == 'Продолжить':
-            keyboard = VkKeyboard()
-            keyboard.add_button('Опознать врага')
-            self.send_message_with_target('mini_boss_Clicker_recognize', user_id, keyboard, 'И так как рекламная программа была удалена, вы решили следовать дальше, но ваши поиски верного пути в очередной раз были прерваны появлением нового врага.')
-    elif self.target == 'mini_boss_Clicker_recognize':
-        if text == 'Опознать врага':
-            keyboard = VkKeyboard()
-            keyboard.add_button('Бой!')
-            self.send_message_with_target('mini_boss_Clicker_choice', user_id, keyboard, 'Перед вами появляется программа Кликер, которая занимается рассылкой спама, содержащий потенциально опасные приложения. И похоже, что он не особо рад вашему присутствию')
-    elif self.target == 'mini_boss_Clicker_choice':
-        if text == 'Бой!' or text == 'Попробовать ещё раз':
+        if text == 'Продолжить' or text == 'Начать бой сначала':
             keyboard = VkKeyboard()
             keyboard.add_button('1')
             keyboard.add_button('2')
+            keyboard.add_line()
             keyboard.add_button('3')
-            if text == 'Попробовать ещё раз':
+            keyboard.add_button('4')
+            if text == 'Начать бой сначала':
                 keyboard.add_line()
                 keyboard.add_button('Подсказка')
-            self.send_message_not_buttons(user_id, '1. Удалить весь спам собственноручно')
-            self.send_message_not_buttons(user_id, '2. Установить утилиту против кликера')
-            self.target = self.send_message_with_target('mini_boss_Clicker_choice_2', user_id, keyboard, '3. Сообщить всем своим контактам, что ваши сообщения спам')
+            else:
+                self.send_message_not_buttons(user_id,
+                                              'Оказывается, что в компьютерах путаются и теряются не только бабушки, так как вы сами уже битый час плутаете в лабиринте различных проводов, матриц и непонятных деталей и складывается ощущение, что бродите вы по кругу.')
+                self.send_message_not_buttons(user_id,
+                                              'И вот, когда вы в очередной раз заметили знакомый узел проводов, прямо из воздуха появилось всплывающее окно с сообщением от вашего друга:')
+                self.send_message_not_buttons(user_id,
+                                              '«Привет, {user}, вышла новая игра, и у меня есть доступ к бесплатной версии. Скачивай быстрее, иначе этот файл быстро почистят. Надо просто открыть файл, и загрузка пойдёт сама. Я вот уже несколько часов играю, это бомба!»'.format(user=self.get_name(user_id)))
+                self.send_message_not_buttons(user_id,
+                                              'К сообщению был прикреплён файл, а так как вы никогда не отказывались от халявных игр, то ваш первый порыв был просто запустить файл.')
+                self.send_message_not_buttons(user_id,
+                                              'Но уже в следующую секунду вы остановили себя и решили немного подумать. За последние пару часов вы столкнулись с таким количеством вредоносных программ, что подумали о том, что сразу же открывать незнакомый файл не стоит, а лучше')
+            self.send_message_not_buttons(user_id, '1. Изменить расширение файла')
+            self.send_message_not_buttons(user_id,
+                                          '2. Отправить файл проверенному знакомому для проверки')
+            self.send_message_not_buttons(user_id,
+                                          '3. Считать файл в другом приложении для чтения ')
+            self.target = self.send_message_with_target('unknown_file_choice', user_id, keyboard,
+                                                        '4. Проверить файл на наличие вируса')
+    elif self.target == 'unknown_file_choice':
+        if text == '4':
+            keyboard = VkKeyboard()
+            keyboard.add_button('Продолжить')
+            self.target = self.send_message_with_target('mini_boss_RAT', user_id, keyboard,
+                                                        'Действительно, самый логичный выбор. Ну и теперь мы видим, что сообщение нам писал никакой не друг, а вирус «шутка», и открывающего точно не стоит. Так что двигаемся дальше.')
+        elif text == '2':
+            keyboard = VkKeyboard()
+            keyboard.add_button('Начать бой сначала')
+            self.target = self.send_message_with_target('unknown_file', user_id, keyboard,
+                                                        'Мы что, хотим подставить знакомого?')
+        elif text == '1':
+            if not self.isWin_boss_lossing:
+                self.target_return_to_mini_boss = 'unknown_file'
+                keyboard = VkKeyboard()
+                keyboard.add_button('Продолжить')
+                self.target = self.send_message_with_target('boss_lossing', user_id, keyboard,
+                                                            'Другое расширение файла никаким образом не гарантирует его безопасность. В эту ловушку то вы и попались, запустив файл')
+            else:
+                keyboard = VkKeyboard()
+                keyboard.add_button('Начать бой сначала')
+                self.target = self.send_message_with_target('unknown_file', user_id, keyboard,
+                                                            'Другое расширение файла никаким образом не гарантирует его безопасность. В эту ловушку то вы и попались, запустив файл')
+        elif text == '3':
+            if not self.isWin_boss_lossing:
+                self.target_return_to_mini_boss = 'unknown_file'
+                keyboard = VkKeyboard()
+                keyboard.add_button('Продолжить')
+                self.target = self.send_message_with_target('boss_lossing', user_id, keyboard,
+                                                            'Слабая надежда на то, что другое приложение для чтения испугает вирус, что и произошло. +1 новый вирус на вашем компьютере')
+            else:
+                keyboard = VkKeyboard()
+                keyboard.add_button('Начать бой сначала')
+                self.target = self.send_message_with_target('unknown_file', user_id, keyboard,
+                                                            'Слабая надежда на то, что другое приложение для чтения испугает вирус, что и произошло. +1 новый вирус на вашем компьютере')
+        elif text == 'Подсказка':
+            self.send_message_not_buttons(user_id,
+                                          'Подсказка: Шутка (Hoax, Joke) — программа, призванная испугать пользователя и спровоцировать его на действия, которые приведут к нанесению ущерба. Может маскироваться под полезную программу.')
+    return self
 
-    elif self.target == 'mini_boss_Clicker_choice_2':
-        if text == '2':
+def battle_RAT(self, text, user_id):
+    if self.target == 'mini_boss_RAT':
+        if text == 'Продолжить' or text == 'Начать бой сначала':
+            keyboard = VkKeyboard()
+            keyboard.add_button('1')
+            keyboard.add_button('2')
+            keyboard.add_line()
+            keyboard.add_button('3')
+            if text == 'Начать бой сначала':
+                keyboard.add_line()
+                keyboard.add_button('Подсказка')
+            else:
+                self.send_message_not_buttons(user_id,
+                                              'Похоже, что мы всё-таки вышли на правильный путь, и буквально через 10 минут вы уже стоите у входа в корневую папку.')
+                self.send_message_not_buttons(user_id,
+                                              'Только зайдя внутрь, вы сразу встречаете двух зомби. Судя по всему, это Программы Удалённого Администрирования, и настроены они явно недружелюбно.')
+                self.send_message_not_buttons(user_id,
+                                              'Вы, может, и хотели разойтись мирно, но вирусы ваше желание не разделили, так что возникает необходимость атаковать. Что предпримите?')
+            self.send_message_not_buttons(user_id, '1. Зайду на сайты, где требуется ввод логина и пароля')
+            self.send_message_not_buttons(user_id,
+                                          '2. Уберу удалённый доступ из процессов устройства')
+            self.target = self.send_message_with_target('mini_boss_RAT_choice', user_id, keyboard,
+                                                        '3. Запрещу подключения удалённого помощника к этому устройству')
+    elif self.target == 'mini_boss_RAT_choice':
+        if text == '3':
             keyboard = VkKeyboard()
             keyboard.add_button('Продолжить')
             self.target = self.send_message_with_target('', user_id, keyboard,
-                                                        'Конечно, пусть за нас работают специальные программы, а мы не будем сильно останавливаться на этом и двинемся дальше')
+                                                        'Поздравляем! Запрет подключения, действительно, избавил вас от этих вредоносных программ.')
+        elif text == '2':
+            if not self.isWin_boss_lossing:
+                self.target_return_to_mini_boss = 'mini_boss_RAT'
+                keyboard = VkKeyboard()
+                keyboard.add_button('Продолжить')
+                self.target = self.send_message_with_target('boss_lossing', user_id, keyboard,
+                                                            'Вирусы всё равно остались на вашем устройстве, так что это был неэффективный вариант решения проблемы ')
+            else:
+                keyboard = VkKeyboard()
+                keyboard.add_button('Начать бой сначала')
+                self.target = self.send_message_with_target('mini_boss_RAT', user_id, keyboard,
+                                                            'Вирусы всё равно остались на вашем устройстве, так что это был неэффективный вариант решения проблемы ')
         elif text == '1':
-            keyboard = VkKeyboard()
-            keyboard.add_button('Попробовать ещё раз')
-            self.target = self.send_message_with_target('mini_boss_Clicker_choice', user_id, keyboard,
-                                                            'К сожалению, у нас не так много времени, да и это не избавляет от корня проблемы, подумайте ещё ')
-        elif text == '3':
-            keyboard = VkKeyboard()
-            keyboard.add_button('Попробовать ещё раз')
-            self.target = self.send_message_with_target('mini_boss_Clicker_choice', user_id, keyboard,
-                                                            'Ну тут мы можем засесть на неделю, так что не самый действенный вариант, может попробуем что-то другое?')
+            if not self.isWin_boss_lossing:
+                self.target_return_to_mini_boss = 'mini_boss_RAT'
+                keyboard = VkKeyboard()
+                keyboard.add_button('Продолжить')
+                self.target = self.send_message_with_target('boss_lossing', user_id, keyboard,
+                                                            'Такими действиями вы дали вирусам доступ к ещё большему количеству своих данных')
+            else:
+                keyboard = VkKeyboard()
+                keyboard.add_button('Начать бой сначала')
+                self.target = self.send_message_with_target('mini_boss_RAT', user_id, keyboard,
+                                                            'Такими действиями вы дали вирусам доступ к ещё большему количеству своих данных')
         elif text == 'Подсказка':
             self.send_message_not_buttons(user_id,
-                                          'Подсказка: Кликер (Clicker) — программа, для накручивания счетчиков (посещения страниц, показа баннеров), увеличения популярности сайта в поисковиках, несанкционированно использует ресурсы компьютера, увеличивает трафик, тем самым приводят к нарушению работы ЭВМ или их сети.')
+                                          '(Подсказка: Удаленный доступ не может предоставляться без вашего разрешения)')
     return self

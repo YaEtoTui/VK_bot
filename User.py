@@ -236,6 +236,9 @@ class User():
     def unknown_file(self, text, user_id):
         Mini_Bosses.unknown_file(self, text, user_id)
 
+    def battle_RAT(self, text, user_id):
+        Mini_Bosses.battle_RAT(self, text, user_id)
+
     # не доделан босс снизу boss_Adware
     #с сюжетом доработать включая задержку
     def battle_boss_Adware(self, text, user_id):
