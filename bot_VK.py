@@ -138,8 +138,8 @@ while True:
                     keyboard.add_button('Опознать незнакомца')
                     dict_targets[user_id].send_message_not_buttons(user_id, 'После 10 минут плутания вы обнаружили достаточно широкую тропинку, по которой и приняли решение идти')
                     dict_targets[user_id].target = dict_targets[user_id].send_message_with_target('mini-boss_1', user_id, keyboard, 'Но пройдя всего пару шагов и завернув за угол, вы в первый раз в этом мире встречаете живое существо. К счастью пока оно вас не видит')
-                elif text == 'Общая информация':
-                    dict_targets[user_id].send_message_not_buttons(user_id, dict_targets[user_id].text_total_information)
+                # elif text == 'Общая информация':
+                #     dict_targets[user_id].send_message_not_buttons(user_id, dict_targets[user_id].text_total_information)
 
                 #1 мини босс - Троянский конь
                 elif dict_targets[user_id].target == 'mini-boss_1' and text == 'Опознать незнакомца':

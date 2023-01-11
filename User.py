@@ -37,9 +37,9 @@ class User():
     def __init__(self, vk_bot, target='start', isWin_boss_lossing=False, isWin_boss_MajorTrojanVirus=False, target_return_to_mini_boss=''):
         self.vk_bot = vk_bot
 
-        self.text_total_information = ''
-        if (isWin_boss_MajorTrojanVirus):
-            self.text_total_information += self.__text_information_boss_MajorTrojanVirus
+        # self.text_total_information = ''
+        # if (isWin_boss_MajorTrojanVirus):
+        #     self.text_total_information += self.__text_information_boss_MajorTrojanVirus
 
         # боссы
         self.isWin_boss_MajorTrojanVirus = isWin_boss_MajorTrojanVirus  # Главный троянский вирус
@@ -69,9 +69,9 @@ class User():
         self.vk_bot.messages.send(user_id=user_id, random_id=get_random_id(), attachment=attachment)
 
     def send_message_with_target(self, target, user_id, keyboard, message):
-        if self.isWin_boss_MajorTrojanVirus or self.isWin_boss_Adware:  # дальше тут дописываем боссов
-            keyboard.add_line()
-            keyboard.add_button('Общая информация')
+        # if self.isWin_boss_MajorTrojanVirus or self.isWin_boss_Adware:  # дальше тут дописываем боссов
+        #     keyboard.add_line()
+        #     keyboard.add_button('Общая информация')
         self.vk_bot.messages.send(
             user_id=user_id,
             random_id=get_random_id(),
@@ -81,9 +81,9 @@ class User():
         return target
 
     def send_message(self, user_id, keyboard, message):
-        if self.isWin_boss_MajorTrojanVirus or self.isWin_boss_Adware:  # дальше тут дописываем боссов
-            keyboard.add_line()
-            keyboard.add_button('Общая информация')
+        # if self.isWin_boss_MajorTrojanVirus or self.isWin_boss_Adware:  # дальше тут дописываем боссов
+        #     keyboard.add_line()
+        #     keyboard.add_button('Общая информация')
         self.vk_bot.messages.send(
             user_id=user_id,
             random_id = get_random_id(),
@@ -164,11 +164,9 @@ class User():
         elif self.target == 'Запуск антивируса для удаления остатков коней' and text == 'Запуск антивируса':
             self.isWin_boss_MajorTrojanVirus = True
             keyboard = VkKeyboard()
-            self.text_total_information += self.__text_information_boss_MajorTrojanVirus
+            # self.text_total_information += self.__text_information_boss_MajorTrojanVirus
             keyboard.add_button('Отправиться дальше')
-            self.target = self.send_message_with_target('meeting_with_a_person', user_id, keyboard, 'Поздравляем, вы полностью избавились от троянских вирусов, '
-                                                   'теперь вам доступна полная информация о них(теперь вы можете увидеть '
-                                                   'всю информацию о вирусе, нажавав кнопку "Общая информация")')
+            self.target = self.send_message_with_target('meeting_with_a_person', user_id, keyboard, 'Поздравляем, вы полностью избавились от троянских вирусов')
 
     def meeting_with_a_person(self, user_id, text):
         if self.target == 'meeting_with_a_person' and text == 'Отправиться дальше':
@@ -179,9 +177,9 @@ class User():
             self.target = self.send_message_with_target('Выбрать_от_1_до_3', user_id, keyboard, 'Немного передохнув, вы двинулись дальше, но '
                                                                                                 'пройдя совсем немного заметили, как на встречу вам бежит ещё '
                                                                                                 'один совершенно незнакомый вам человечек')
-            self.send_message_not_buttons(user_id, '(1) Остановиться и подождать ')
-            self.send_message_not_buttons(user_id, '(2) Зачем нам ещё один бой? Попробовать убежать ')
-            self.send_message_not_buttons(user_id, '(3) Этот мир не очень дружелюбный, не помешает подготовиться к битве')
+            self.send_message_not_buttons(user_id, '1. Остановиться и подождать ')
+            self.send_message_not_buttons(user_id, '2. Зачем нам ещё один бой? Попробовать убежать ')
+            self.send_message_not_buttons(user_id, '3. Этот мир не очень дружелюбный, не помешает подготовиться к битве')
 
         elif self.target == 'Выбрать_от_1_до_3' and (text == '1' or text == '2' or text == '3'):
             try:
