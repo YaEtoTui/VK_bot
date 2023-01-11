@@ -80,16 +80,9 @@ while True:
                     dict_targets[user_id] = User(vk_bot, set_target(user_id), isWin_boss_lossing=set_isWin_boss_lossing(user_id) ,isWin_boss_MajorTrojanVirus=set_isWin_boss_MajorTrojanVirus(user_id), target_return_to_mini_boss=set_target_return_to_mini_boss(user_id))
 
                 if dict_targets[user_id].target == 'start':
-                    try:
-                        # отправляем фотку(ниже 1 скрин)
-                        dict_targets[user_id].send_photo(photo_1=os.path.abspath(os.path.join('Pictures', 'fon_3.png')),
-                                                         user_id=user_id)
-                    except Exception as exc:
-                        print('Картинка не прогрузилась!')
-                    finally:
-                        keyboard = VkKeyboard()
-                        keyboard.add_button('Начать путешествие')
-                        dict_targets[user_id].target = dict_targets[user_id].send_message_with_target('Начать_путешествие',
+                    keyboard = VkKeyboard()
+                    keyboard.add_button('Начать путешествие')
+                    dict_targets[user_id].target = dict_targets[user_id].send_message_with_target('Начать_путешествие',
                                                                                                       user_id, keyboard,
                                                                                                       'Приветствую вас {user}, это текстовая игра(квест), все действия выполняются '
                                                                                                       'с помощью кнопок под окном чата, а результаты приходят в виде сообщений и картинок. '
@@ -112,9 +105,9 @@ while True:
 
                         dict_targets[user_id].send_message(user_id, keyboard, 'В тот же миг на ваш компьютер загружается вредоносная программа, которая находилась '
                                                                               'в письме и только и ждала того, чтобы вы его открыли. ')
-                        dict_targets[user_id].send_message_not_buttons(user_id, '(1) -Перезапущу компьютер, и всё будет хорошо')
-                        dict_targets[user_id].send_message_not_buttons(user_id, '(2) -Ой, а что же теперь делать?')
-                        dict_targets[user_id].send_message_not_buttons(user_id, '(3) -Да не может такого быть, приколы какие-то')
+                        dict_targets[user_id].send_message_not_buttons(user_id, '1. -Перезапущу компьютер, и всё будет хорошо')
+                        dict_targets[user_id].send_message_not_buttons(user_id, '2. -Ой, а что же теперь делать?')
+                        dict_targets[user_id].send_message_not_buttons(user_id, '3. -Да не может такого быть, приколы какие-то')
                         dict_targets[user_id].target = 'start_1'
                 elif dict_targets[user_id].target == 'start_1' and (text == '1' or text == '2' or text == '3'):
                     if text == '1':
@@ -123,7 +116,15 @@ while True:
                         dict_targets[user_id].send_message_not_buttons(user_id, 'К сожалению это не чья-то глупая шутка, и вирусы действительно заполонили ваш компьютер')
                     keyboard = VkKeyboard()
                     keyboard.add_button('Нажать «Enter»')
-                    dict_targets[user_id].target = dict_targets[user_id].send_message_with_target('Нажать «Enter»', user_id, keyboard, 'Вы не сразу заметили сообщение в '
+                    #картинка
+                    try:
+                        # отправляем фотку(ниже 1 скрин)
+                        dict_targets[user_id].send_photo(photo_1=os.path.abspath(os.path.join('Pictures', 'fon_3.png')),
+                                                         user_id=user_id)
+                    except Exception as exc:
+                        print('Картинка не прогрузилась!')
+                    finally:
+                        dict_targets[user_id].target = dict_targets[user_id].send_message_with_target('Нажать «Enter»', user_id, keyboard, 'Вы не сразу заметили сообщение в '
                                                                                                                                        'командной строке, но сейчас обратили внимание. Там следующий текст: «Привет, {user}! У нас плохие времена, '
                                                                                                                                        'компьютеру и так требовалась чистка, а сейчас его захватило большое количество вирусов. Мы очень нуждаемся в тебе, поэтому я, '
                                                                                                                                        'твой cmd, обращаюсь к тебе за помощью, и если ты готов отправиться в недры своего компьютера и разобраться со всеми проблемами, '
@@ -233,11 +234,12 @@ while True:
                             dict_targets[user_id].target = dict_targets[user_id].send_message_with_target('the_end', user_id, keyboard, 'Над квестом работала команда codEater.')
                 #заканчивает игру
                 elif dict_targets[user_id].target == 'the_end':
-                    # заканчиваем игру и начинаем заново
-                    delete_saved_data(user_id)
-                    keyboard = VkKeyboard()
-                    keyboard.add_button('Начать заново')
-                    dict_targets[user_id].send_message(user_id, keyboard, 'Нажмите кнопку, чтобы начать игру заново!')
+                    if text != 'Общая информация':
+                        # заканчиваем игру и начинаем заново
+                        delete_saved_data(user_id)
+                        keyboard = VkKeyboard()
+                        keyboard.add_button('Начать заново')
+                        dict_targets[user_id].send_message(user_id, keyboard, 'Нажмите кнопку, чтобы начать игру заново!')
 
 
                 print('Текущий checkpoint: {}'.format(dict_targets[user_id].target))

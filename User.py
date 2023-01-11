@@ -137,7 +137,7 @@ class User():
                                                          'урон у врага не получилось, и уже вы предпринимаете попытку атаковать. Так как вы уже встречались с трояном '
                                                          'вы решили попробовать сделать то же самое, "выполнить полную проверку системы и удалить вредоносное ПО", '
                                                          'но босс не так прост, чтобы убрать его с устройства нужно больше усилий.')
-                self.send_message_not_buttons(user_id, '1. Попытаться проникнуть внутрь коня изнутри его уничтожить')
+                self.send_message_not_buttons(user_id, '1. Попытаться проникнуть внутрь коня, изнутри его уничтожить')
                 self.send_message_not_buttons(user_id, '2. Отключить питание устройства и запустить его снова')
                 self.target = self.send_message_with_target('is_battle_boss_MajorTrojanVirus_choice', user_id, keyboard, '3. Установить утилиту для удаления троянских коней')
         elif self.target == 'is_battle_boss_MajorTrojanVirus_choice':
@@ -166,7 +166,7 @@ class User():
             keyboard = VkKeyboard()
             self.text_total_information += self.__text_information_boss_MajorTrojanVirus
             keyboard.add_button('Отправиться дальше')
-            self.target = self.send_message_with_target('meeting_with_a_person', user_id, keyboard, 'Поздравляем вы полностью избавились от троянских вирусов, '
+            self.target = self.send_message_with_target('meeting_with_a_person', user_id, keyboard, 'Поздравляем, вы полностью избавились от троянских вирусов, '
                                                    'теперь вам доступна полная информация о них(теперь вы можете увидеть '
                                                    'всю информацию о вирусе, нажавав кнопку "Общая информация")')
 
@@ -184,22 +184,23 @@ class User():
             self.send_message_not_buttons(user_id, '(3) Этот мир не очень дружелюбный, не помешает подготовиться к битве')
 
         elif self.target == 'Выбрать_от_1_до_3' and (text == '1' or text == '2' or text == '3'):
-            if text == '1':
-                self.send_message_not_buttons(user_id, 'Через пару секунд существо нагнало вас, запыхавшись он начал говорить:')
-            elif text == '2':
-                self.send_message_not_buttons(user_id, 'Вы развернулись и даже успели сделать несколько шагов, после чего услышали как '
-                                                       'вас окликнули по имени и остановились. Вам стало любопытно, откуда этому лицу известно ваше имя. '
-                                                       'Решив разобраться в этой ситуации, вы развернулись и настороженно стали ждать, когда человечек подойдёт ближе.\n'
-                                                       'Долго ждать не пришлось, и уже через несколько секунд он был около вас. Остановившись, он оглядел вас и начал говорить:')
-            elif text == '3':
-                self.send_message_not_buttons(user_id, 'Морально настроившись на ещё один бой, вы встали в оборонительную позицию. Приблизившись к вам на расстояние нескольких шагов, '
-                                                       'человечек остановился, оглядел вас и, примирительно подняв руки, сказал: ')
             try:
                 # отправляем фотку(ниже 1 скрин)
                 self.send_photo(photo_1=os.path.abspath(os.path.join('Pictures', 'cmd.png')), user_id=user_id)
             except Exception as exc:
                 print('Картинка не прогрузилась!')
             finally:
+                if text == '1':
+                    self.send_message_not_buttons(user_id, 'Через пару секунд существо нагнало вас, запыхавшись он начал говорить:')
+                elif text == '2':
+                    self.send_message_not_buttons(user_id, 'Вы развернулись и даже успели сделать несколько шагов, после чего услышали как '
+                                                       'вас окликнули по имени и остановились. Вам стало любопытно, откуда этому лицу известно ваше имя. '
+                                                       'Решив разобраться в этой ситуации, вы развернулись и настороженно стали ждать, когда человечек подойдёт ближе.\n'
+                                                       'Долго ждать не пришлось, и уже через несколько секунд он был около вас. Остановившись, он оглядел вас и начал говорить:')
+                elif text == '3':
+                    self.send_message_not_buttons(user_id, 'Морально настроившись на ещё один бой, вы встали в оборонительную позицию. Приблизившись к вам на расстояние нескольких шагов, '
+                                                       'человечек остановился, оглядел вас и, примирительно подняв руки, сказал: ')
+
                 keyboard = VkKeyboard()
                 keyboard.add_button('1')
                 keyboard.add_button('2')
@@ -208,9 +209,9 @@ class User():
                                                  'наш мир от непрошенных гостей. Судя по твоему виду, ты уже встретил кого-то из наших недоброжелателей. '
                                                  'Хорошо, что ты не пострадал! Ой, я совсем забыл представиться, меня зовут Cmd, надеюсь, мы быстро подружимся '
                                                  'и вместе одолеем всех вирусов.»'.format(user=self.get_name(user_id)))
-                self.send_message_not_buttons(user_id, '(1) «А что здесь произошло, почему в моём компьютере одновременно оказалось столько вредоносных программ?» ')
-                self.send_message_not_buttons(user_id, '(2) «И как нам справиться со всеми врагами?»')
-                self.send_message_not_buttons(user_id, '(3) «Рад знакомству, какие будут предложения, что делать дальше?»')
+                self.send_message_not_buttons(user_id, '1. «А что здесь произошло, почему в моём компьютере одновременно оказалось столько вредоносных программ?» ')
+                self.send_message_not_buttons(user_id, '2. «И как нам справиться со всеми врагами?»')
+                self.send_message_not_buttons(user_id, '3. «Рад знакомству, какие будут предложения, что делать дальше?»')
                 self.target = 'Дальнейшее развитие'
         elif self.target == 'Дальнейшее развитие' and (text == '1' or text == '2' or text == '3'):
             keyboard = VkKeyboard()
@@ -226,11 +227,104 @@ class User():
             self.send_message_not_buttons(user_id, 'Вы же постояли некоторое время на месте, обдумывая всё только что услышанное, и только после пары минут активной мозговой деятельности пришли к выводу, что нужно попытаться освободить свой компьютер от этих нежелательных гостей, и двинулись в указанном направлении.')
             keyboard = VkKeyboard()
             keyboard.add_button('Опознать программу')
-            self.target = self.send_message_with_target('mini-boss_Rootkit', user_id, keyboard, 'Поначалу всё было спокойно, неподвижную тишину нарушал только звук ваших шагов. Направление вашего движения подсказывали указатели, расставленные на какой развилке. Вы уже даже успели подумать, что всё не так страшно, как показалось изначально, как вдруг прямо перед вами материализовалась какая-то программа.')
+            self.target = self.send_message_with_target('mini-boss_Rootkit', user_id, keyboard, 'Поначалу всё было спокойно, неподвижную тишину нарушал только звук ваших шагов. Направление вашего движения подсказывали указатели, расставленные на каждой развилке. Вы уже даже успели подумать, что всё не так страшно, как показалось изначально, как вдруг прямо перед вами материализовалась какая-то программа.')
 
     #Руткит
     def battle_Rootkit(self, text, user_id):
-        Mini_Bosses.battle_Rootkit(self, text, user_id)
+        if self.target == 'mini-boss_Rootkit':
+            if text == 'Опознать программу' or text == 'Начать бой сначала' or text == 'Продолжить':
+                keyboard = VkKeyboard()
+                keyboard.add_button('1')
+                keyboard.add_button('2')
+                keyboard.add_line()
+                keyboard.add_button('3')
+                keyboard.add_button('4')
+                keyboard.add_button('5')
+                if text == 'Начать бой сначала':
+                    keyboard.add_line()
+                    keyboard.add_button('Подсказка')
+                else:
+                    try:
+                        # отправляем фотку(ниже 1 скрин)
+                        self.send_photo(photo_1=os.path.abspath(os.path.join('Pictures', 'руткит.png')),
+                                        user_id=user_id)
+                    except Exception as exc:
+                        print('Картинка не прогрузилась!')
+                    finally:
+                        self.send_message_not_buttons(user_id,
+                                                      'Небольшой анализ позволил вам определить, что вы столкнулись с Руткитом. Используя эффект неожиданности, противник нанёс удар, но, благодаря молниеносной реакции, вам удалось увернуться, и удар прошёл мимо. ')
+                        self.send_message_not_buttons(user_id,
+                                                      'Похоже, что руткит серьёзно настроен устранить вас, поэтому избежать сражения не представляется возможным. Стоит попробовать ответить обидчику.')
+
+                self.send_message_not_buttons(user_id, '1. Удалить все файлы руткита которые сразу заметны')
+                self.send_message_not_buttons(user_id, '2. Позволить антивирусу разобраться')
+                self.send_message_not_buttons(user_id,
+                                              '3. Провести полный анализ системы и очистить все глубокие источники руткита')
+                self.send_message_not_buttons(user_id, '4. Переустановить операционную систему')
+                self.target = self.send_message_with_target('mini-boss_Rootkit_choice', user_id, keyboard,
+                                                            '5. Сбросить настройки системы')
+        elif self.target == 'mini-boss_Rootkit_choice':
+            if text == '1':
+                # переходим к проигрышному боссу
+                if not self.isWin_boss_lossing:
+                    self.target_return_to_mini_boss = 'mini-boss_Rootkit'
+                    keyboard = VkKeyboard()
+                    keyboard.add_button('Продолжить')
+                    self.target = self.send_message_with_target('boss_lossing', user_id, keyboard,
+                                                                'Вирус проник намного глубже и удаление только заметных файлов не помогли окончательно избавиться от руткита ')
+                else:
+                    keyboard = VkKeyboard()
+                    keyboard.add_button('Начать бой сначала')
+                    self.target = self.send_message_with_target('mini-boss_Rootkit', user_id, keyboard,
+                                                                'Вирус проник намного глубже и удаление только заметных файлов не помогли окончательно избавиться от руткита')
+            elif text == '2':
+                if not self.isWin_boss_lossing:
+                    # переходим к проигрышному боссу
+                    self.target_return_to_mini_boss = 'mini-boss_Rootkit'
+                    keyboard = VkKeyboard()
+                    keyboard.add_button('Продолжить')
+                    self.target = self.send_message_with_target('boss_lossing', user_id, keyboard,
+                                                                'Антивирус оказался не самым быстрым вашим другом, а следующий удар руткита всё же достиг задуманной цели и попал в вас')
+                else:
+                    keyboard = VkKeyboard()
+                    keyboard.add_button('Начать бой сначала')
+                    self.target = self.send_message_with_target('mini-boss_Rootkit', user_id, keyboard,
+                                                                'Антивирус оказался не самым быстрым вашим другом, а следующий удар руткита всё же достиг задуманной цели и попал в вас')
+            elif text == '4':
+                if not self.isWin_boss_lossing:
+                    # переходим к проигрышному боссу
+                    self.target_return_to_mini_boss = 'mini-boss_Rootkit'
+                    keyboard = VkKeyboard()
+                    keyboard.add_button('Продолжить')
+                    self.target = self.send_message_with_target('boss_lossing', user_id, keyboard,
+                                                                'К сожалению, переустановка не помогла, и вторым ударом вирус спокойно добил вас')
+                else:
+                    keyboard = VkKeyboard()
+                    keyboard.add_button('Начать бой сначала')
+                    self.target = self.send_message_with_target('mini-boss_Rootkit', user_id, keyboard,
+                                                                'К сожалению, переустановка не помогла, и вторым ударом вирус спокойно добил вас')
+            elif text == '5':
+                if not self.isWin_boss_lossing:
+                    # переходим к проигрышному боссу
+                    self.target_return_to_mini_boss = 'mini-boss_Rootkit'
+                    keyboard = VkKeyboard()
+                    keyboard.add_button('Продолжить')
+                    self.target = self.send_message_with_target('boss_lossing', user_id, keyboard,
+                                                                'Попытка была неплохой, но не самой действенной, ведь после сброса настроек вирус так и остался перед вами, да ещё и с очередным ударом, увернуться от которого уже не представляется возможным ')
+                else:
+                    keyboard = VkKeyboard()
+                    keyboard.add_button('Начать бой сначала')
+                    self.target = self.send_message_with_target('mini-boss_Rootkit', user_id, keyboard,
+                                                                'Попытка была неплохой, но не самой действенной, ведь после сброса настроек вирус так и остался перед вами, да ещё и с очередным ударом, увернуться от которого уже не представляется возможным ')
+            elif text == '3':
+                # Победа!!
+                keyboard = VkKeyboard()
+                keyboard.add_button('Продолжить')
+                self.target = self.send_message_with_target('mini_boss_KeyLogger', user_id, keyboard,
+                                                            'Только руткит собрался ударить ещё раз, как начал распадаться на мелкие частички и через пару секунд совсем исчез')
+            elif text == 'Подсказка':
+                self.send_message_not_buttons(user_id,
+                                              '(Подсказка): Руткит обычно прячется глубоко в недрах операционной системы и специально записаны таким образом, чтобы избегать обнаружения антивирусом')
 
     #проигрышный босс (Спуфер), ставим после проигрыша у мини-боссов
     def battle_lossing_boss(self, text, user_id):
