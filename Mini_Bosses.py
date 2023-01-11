@@ -253,7 +253,7 @@ def battle_Hijacker(self, text, user_id):
             else:
                 keyboard = VkKeyboard()
                 keyboard.add_button('Начать бой сначала')
-                self.target = self.send_message_with_target('mini_boss_KeyLogger_choice', user_id, keyboard,
+                self.target = self.send_message_with_target('mini_boss_Hijacker', user_id, keyboard,
                                                             'Простое удаление не всегда решает проблему, а особенно, если эта проблема способна наносить такие удары, как те, что полетели в вас')
         elif text == '3':
             if not self.isWin_boss_lossing:
@@ -265,7 +265,7 @@ def battle_Hijacker(self, text, user_id):
             else:
                 keyboard = VkKeyboard()
                 keyboard.add_button('Начать бой сначала')
-                self.target = self.send_message_with_target('mini_boss_KeyLogger_choice', user_id, keyboard,
+                self.target = self.send_message_with_target('mini_boss_Hijacker', user_id, keyboard,
                                                             'Похоже, что дело не в простой смене браузера, ведь монстр уже успел уложить вас на лопатки')
         elif text == '4':
             if not self.isWin_boss_lossing:
