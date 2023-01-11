@@ -87,7 +87,13 @@ def battle_lossing_boss(self, text, user_id):
                 keyboard.add_line()
                 keyboard.add_button('Подсказка')
             else:
-                self.send_message_not_buttons(user_id,
+                try:
+                    # отправляем фотку(ниже 1 скрин)
+                    self.send_photo(photo_1=os.path.abspath(os.path.join('Pictures', 'спуфер.png')), user_id=user_id)
+                except Exception as exc:
+                    print('Картинка не прогрузилась!')
+                finally:
+                    self.send_message_not_buttons(user_id,
                                               'Как только вы нажали кнопку включения, компьютер сразу затянул вас внутрь. Но ввести пароль для входа вам мешает ещё один вирус, Спуфер. Чтобы обратно вернуться в цифровой мир, вам следует избавиться от него. Что предпримите?')
             self.send_message_not_buttons(user_id, '1. Буду использовать двухфакторную аутентификацию')
             self.send_message_not_buttons(user_id, '2. Дам доступ к личной информации другим')
