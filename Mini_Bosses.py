@@ -33,6 +33,7 @@ def battle_DestructiveTrojanHorse(self, text, user_id):
             keyboard.add_button('Продолжить путь')
             self.target = self.send_message_with_target('boss_1', user_id, keyboard,
                                                         'Поздравляем, вы уничтожили своего первого противника, но впереди еще долгое путешествие, наберитесь сил и отправляйтесь дальше')
+            self.send_message_not_buttons(user_id, 'Деструктивный троянский конь (Trojan) — программа, содержащая деструктивные недокументированные возможности, маскирующаяся под полезную программу, приводящая к несанкционированному уничтожению, блокированию, модификации, копированию информации, нарушению работы ЭВМ и сетей при запуске или в другой момент времени (при выполнении определенных условий). Маскировка используется для проникновения на компьютер под благовидным предлогом, а недокументированные функции проявляются уже после проникновения.')
         elif text == '2':
             # переходим к проигрышному боссу
             if not self.isWin_boss_lossing:
@@ -112,6 +113,7 @@ def battle_lossing_boss(self, text, user_id):
             keyboard.add_button('Продолжить')
             self.target = self.send_message_with_target(self.target_return_to_mini_boss, user_id, keyboard,
                                                         'Прекрасно! Вы справились с шпионом на вашем компьютере и можете продолжить свой путь.')
+            self.send_message_not_buttons(user_id, 'Спуфер (Spoofer) — программа, позволяющая получать НСД к логинам и паролям пользователей, путем имитации приглашения входа в систему или регистрации для работы с программой. Все вводимые пароли сохраняются или отсылаются злоумышленнику, после чего спуфер имитирует ошибку ввода пароля и/или запускает настоящую программу входа в систему. Спуфер может быть запущен на компьютере даже пользователем с минимальными правами в системе. Для защиты от спуферов не стоит доверять приглашениям входа в систему или программу, если они инициализированы не Вами — нужно перезагрузить компьютер или самостоятельно запустить программу.')
         elif text == '2' or text == '4':
             keyboard = VkKeyboard()
             keyboard.add_button('Начать бой сначала')
@@ -148,6 +150,7 @@ def battle_KeyLogger(self, text, user_id):
             keyboard = VkKeyboard()
             keyboard.add_button('Продолжить')
             self.target = self.send_message_with_target('mini_boss_Hijacker', user_id, keyboard, 'Вам удалось сбежать от клавиатурного шпиона')
+            self.send_message_not_buttons(user_id, 'Клавиатурный шпион (KeyLogger, кейлоггер, от англ. «key logger» -«сохраняющий клавиши») — программа, сохраняющая все нажатые пользователем клавиши в специальный файл, возможно с последующее отправкой его злоумышленнику. Кейлоггеры позволяют ограничить окна, нажатия клавиш в которых нужно сохранять. В первую очередь интересные клавиши, нажимаемые в окнах с определенным заголовком (например, содержащим текстовые строки «Вход в систему», «Аутентификация», «Введите пароль», «Регистрация») и в определенных окнах.')
         elif text == '2' or text == 'Начать бой сначала':
             keyboard = VkKeyboard()
             keyboard.add_button('1')
@@ -239,6 +242,7 @@ def battle_Hijacker(self, text, user_id):
             keyboard.add_button('Продолжить')
             self.target = self.send_message_with_target('mini_boss_AdWare', user_id, keyboard,
                                                         'Поздравляем, удаление инструментов и расширений сработало, и враг оказался повержен!')
+            self.send_message_not_buttons(user_id, 'Хиджакер (Hijacker) — программа, осуществляющая несанкционированную пользователем перенастройку системы (например, смена обоев рабочего стола, обработчиков файлов по умолчанию), как правило, браузера (например, смена стартовой страницы, страницы поиска, соответствия префиксов протоколов).')
         elif text == '1':
             if not self.isWin_boss_lossing:
                 self.target_return_to_mini_boss = 'mini_boss_Hijacker'
@@ -313,6 +317,7 @@ def battle_AdWare(self, text, user_id):
             keyboard.add_button('Продолжить')
             self.target = self.send_message_with_target('mini_boss_Clicker', user_id, keyboard,
                                                         'Да! Вы приняли правильное решение, и уже через секунду вирус пропал, будто его никогда и не было')
+            self.send_message_not_buttons(user_id, 'Рекламная программа (AdWare, SpyWare) — программа для демонстрации рекламных окон, открытия рекламируемых сайтов. Помимо этого может следить за действиями пользователя (посещенные сайты, введенные строки для поиска) и работать совместно с другими вредоносными программами.')
         elif text == '1':
             keyboard = VkKeyboard()
             keyboard.add_button('Попробовать ещё раз')
@@ -364,6 +369,7 @@ def battle_Clicker(self, text, user_id):
             keyboard.add_button('Продолжить')
             self.target = self.send_message_with_target('unknown_file', user_id, keyboard,
                                                         'Конечно, пусть за нас работают специальные программы, а мы не будем сильно останавливаться на этом и двинемся дальше')
+            self.send_message_not_buttons(user_id, 'Кликер (Clicker) — программа, для накручивания счетчиков (посещения страниц, показа баннеров), увеличения популярности сайта в поисковиках, несанкционированно использует ресурсы компьютера, увеличивает трафик, тем самым приводят к нарушению работы ЭВМ или их сети.')
         elif text == '1':
             keyboard = VkKeyboard()
             keyboard.add_button('Попробовать ещё раз')
@@ -433,6 +439,7 @@ def unknown_file(self, text, user_id):
                 keyboard.add_button('Продолжить')
                 self.target = self.send_message_with_target('boss_lossing', user_id, keyboard,
                                                             'Другое расширение файла никаким образом не гарантирует его безопасность. В эту ловушку то вы и попались, запустив файл')
+                self.send_message_not_buttons(user_id, 'Шутка (Hoax, Joke) — программа, призванная испугать пользователя и спровоцировать его на действия, которые приведут к нанесению ущерба. Может маскироваться под полезную программу.')
             else:
                 keyboard = VkKeyboard()
                 keyboard.add_button('Начать бой сначала')
@@ -490,6 +497,7 @@ def battle_RAT(self, text, user_id):
             keyboard.add_button('Продолжить')
             self.target = self.send_message_with_target('mini_boss_Zombie', user_id, keyboard,
                                                         'Поздравляем! Запрет подключения, действительно, избавил вас от этих вредоносных программ.')
+            self.send_message_not_buttons(user_id, 'Программа удаленного администрирования (RAT, remote access trojan, remote access tool, бэкдор, backdoor, от англ. «back door» — «задняя дверь», «черный ход») — программа, предоставляющая удаленному пользователю возможности по управлению зараженным компьютером (доступ ко всем ресурсам), приводит к нарушению работы ЭВМ.')
         elif text == '2':
             if not self.isWin_boss_lossing:
                 self.target_return_to_mini_boss = 'mini_boss_RAT'
@@ -556,6 +564,7 @@ def battle_Zombie(self, text, user_id):
             keyboard.add_button('Продолжить')
             self.target = self.send_message_with_target('the_good_end', user_id, keyboard,
                                                         'Вау! После сканирования и удаления в сторону босса от вас пошла волна, которая своей мощью снесла зомби, сбила его с ног, после чего он просто исчез.')
+            self.send_message_not_buttons(user_id, 'Зомби — Zombie\nЗомби позволяют злоумышленнику управлять компьютером пользователя. Компьютеры – зомби могут быть объединены в сеть  и использоваться для массовой атаки на сайты или рассылки спама. Пользователь может даже не догадываться, что его компьютер зомбирован и используется злоумышленником.')
         elif text == '1':
             if not self.isWin_boss_lossing:
                 self.target_return_to_mini_boss = 'mini_boss_Zombie'
