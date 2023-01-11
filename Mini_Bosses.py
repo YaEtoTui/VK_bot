@@ -427,6 +427,8 @@ def unknown_file(self, text, user_id):
             keyboard.add_button('Продолжить')
             self.target = self.send_message_with_target('mini_boss_RAT', user_id, keyboard,
                                                         'Действительно, самый логичный выбор. Ну и теперь мы видим, что сообщение нам писал никакой не друг, а вирус «шутка», и открывать точно не стоит. Так что двигаемся дальше.')
+            self.send_message_not_buttons(user_id,
+                                      'Шутка (Hoax, Joke) — программа, призванная испугать пользователя и спровоцировать его на действия, которые приведут к нанесению ущерба. Может маскироваться под полезную программу.')
         elif text == '2':
             keyboard = VkKeyboard()
             keyboard.add_button('Начать бой сначала')
@@ -439,7 +441,6 @@ def unknown_file(self, text, user_id):
                 keyboard.add_button('Продолжить')
                 self.target = self.send_message_with_target('boss_lossing', user_id, keyboard,
                                                             'Другое расширение файла никаким образом не гарантирует его безопасность. В эту ловушку то вы и попались, запустив файл')
-                self.send_message_not_buttons(user_id, 'Шутка (Hoax, Joke) — программа, призванная испугать пользователя и спровоцировать его на действия, которые приведут к нанесению ущерба. Может маскироваться под полезную программу.')
             else:
                 keyboard = VkKeyboard()
                 keyboard.add_button('Начать бой сначала')
