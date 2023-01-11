@@ -3,9 +3,8 @@ import sqlite3
 import vk_api
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor, VkKeyboardButton
 from vk_api.longpoll import VkLongPoll, VkEventType
-from User import User
 import os
-
+from User import User
 
 def check_if_exists(user_id):
     c.execute('SELECT * FROM users_game_bot_VK WHERE user_id = %d' % user_id)
@@ -143,11 +142,17 @@ while True:
 
                 #1 мини босс - Троянский конь
                 elif dict_targets[user_id].target == 'mini-boss_1' and text == 'Опознать незнакомца':
-                    keyboard = VkKeyboard()
-                    keyboard.add_button('Напасть')
-                    keyboard.add_line()
-                    keyboard.add_button('Попытаться незаметно ускользнуть')
-                    dict_targets[user_id].target = dict_targets[user_id].send_message_with_target(
+                    try:
+                        # отправляем фотку(ниже 1 скрин)
+                        dict_targets[user_id].send_photo(photo_1=os.path.abspath(os.path.join('Pictures', 'конь1.png')), user_id=user_id)
+                    except Exception as exc:
+                        print('Картинка не прогрузилась!')
+                    finally:
+                        keyboard = VkKeyboard()
+                        keyboard.add_button('Напасть')
+                        keyboard.add_line()
+                        keyboard.add_button('Попытаться незаметно ускользнуть')
+                        dict_targets[user_id].target = dict_targets[user_id].send_message_with_target(
                         'is_battle_mini-boss_DestructiveTrojanHorse', user_id, keyboard,
                         'Вы явно не самый везучий, ведь путь вам преградил не кто иной, как деструктивный троянский конь. '
                         'В школе на занятиях по информатике вам рассказывали о самых распространённых компьютерных вирусах, поэтому ты легко опознал в существе врага')
@@ -212,13 +217,20 @@ while True:
                         dict_targets[user_id].target = dict_targets[user_id].send_message_with_target('final_end', user_id, keyboard, 'Очнувшись в своей комнате, вы понимаете, что ваше приключение окончено и пора возвращаться к повседневной жизни, снова...')
                 elif dict_targets[user_id].target == 'final_end':
                     if text == 'Ура!!':
-                        keyboard = VkKeyboard()
-                        keyboard.add_button('Завершить игру')
-                        dict_targets[user_id].send_message_not_buttons(user_id, 'Поздравляем, вы смогли справиться со всеми трудностями, уничтожили все вирусы, теперь на вашем устройстве воцарятся мир и процветание, а уровень ваших знаний значительно вырос!')
-                        dict_targets[user_id].send_message_not_buttons(user_id, 'Вы способны избавиться от вирусов самостоятельно. Главное, не стоит забывать, что самый простой выбор не всегда самый правильный. Также не бойтесь прибегать к уже  существующим устройствам для удаления вредоносных программ и защиты вашего компьютера, ведь не всегда у вас будет возможность самим залезть в устройство и победить всех врагов.')
-                        dict_targets[user_id].send_message_not_buttons(user_id, 'Все истории подходят к концу, и, к сожалению, эта не исключение, но, если у вас будут вопросы, вы всегда можете обратиться к другим источникам для получения новых знаний.')
-                        dict_targets[user_id].send_message_not_buttons(user_id, 'На этом моменте пора прощаться.')
-                        dict_targets[user_id].target = dict_targets[user_id].send_message_with_target('the_end', user_id, keyboard, 'Над квестом работала команда codEater.')
+                        try:
+                            # отправляем фотку(ниже 1 скрин)
+                            dict_targets[user_id].send_photo(
+                                photo_1=os.path.abspath(os.path.join('Pictures', 'финал.jpg')), user_id=user_id)
+                        except Exception as exc:
+                            print('Картинка не прогрузилась!')
+                        finally:
+                            keyboard = VkKeyboard()
+                            keyboard.add_button('Завершить игру')
+                            dict_targets[user_id].send_message_not_buttons(user_id, 'Поздравляем, вы смогли справиться со всеми трудностями, уничтожили все вирусы, теперь на вашем устройстве воцарятся мир и процветание, а уровень ваших знаний значительно вырос!')
+                            dict_targets[user_id].send_message_not_buttons(user_id, 'Вы способны избавиться от вирусов самостоятельно. Главное, не стоит забывать, что самый простой выбор не всегда самый правильный. Также не бойтесь прибегать к уже  существующим устройствам для удаления вредоносных программ и защиты вашего компьютера, ведь не всегда у вас будет возможность самим залезть в устройство и победить всех врагов.')
+                            dict_targets[user_id].send_message_not_buttons(user_id, 'Все истории подходят к концу, и, к сожалению, эта не исключение, но, если у вас будут вопросы, вы всегда можете обратиться к другим источникам для получения новых знаний.')
+                            dict_targets[user_id].send_message_not_buttons(user_id, 'На этом моменте пора прощаться.')
+                            dict_targets[user_id].target = dict_targets[user_id].send_message_with_target('the_end', user_id, keyboard, 'Над квестом работала команда codEater.')
                 #заканчивает игру
                 elif dict_targets[user_id].target == 'the_end':
                     # заканчиваем игру и начинаем заново

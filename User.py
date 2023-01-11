@@ -1,3 +1,5 @@
+import os
+
 import vk_api
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor, VkKeyboardButton
 from vk_api.utils import get_random_id
@@ -122,7 +124,14 @@ class User():
                     keyboard.add_line()
                     keyboard.add_button('Подсказка')
                 else:
-                    self.send_message_not_buttons(user_id, 'Программа кажется идентичной предыдущей, но стоит вам приглядеться, как вы понимаете, '
+                    try:
+                        # отправляем фотку(ниже 1 скрин)
+                        self.send_photo(photo_1=os.path.abspath(os.path.join('Pictures', 'конь_2_босс.png')),
+                                        user_id=user_id)
+                    except Exception as exc:
+                        print('Картинка не прогрузилась!')
+                    finally:
+                        self.send_message_not_buttons(user_id, 'Программа кажется идентичной предыдущей, но стоит вам приглядеться, как вы понимаете, '
                                                          'что этот соперник гораздо больше, из это неудивительно, ведь перед вами Главный троянский вирус. '
                                                          'Он наносит первый удар настолько неожиданно, что вы не успели среагировать. К счастью нанести вам большой '
                                                          'урон у врага не получилось, и уже вы предпринимаете попытку атаковать. Так как вы уже встречались с трояном '
@@ -185,18 +194,24 @@ class User():
             elif text == '3':
                 self.send_message_not_buttons(user_id, 'Морально настроившись на ещё один бой, вы встали в оборонительную позицию. Приблизившись к вам на расстояние нескольких шагов, '
                                                        'человечек остановился, оглядел вас и, примирительно подняв руки, сказал: ')
-            keyboard = VkKeyboard()
-            keyboard.add_button('1')
-            keyboard.add_button('2')
-            keyboard.add_button('3')
-            self.send_message(user_id, keyboard, '«{user}, я очень рад, что ты принял моё приглашение и пришёл помочь освободить '
+            try:
+                # отправляем фотку(ниже 1 скрин)
+                self.send_photo(photo_1=os.path.abspath(os.path.join('Pictures', 'cmd.png')), user_id=user_id)
+            except Exception as exc:
+                print('Картинка не прогрузилась!')
+            finally:
+                keyboard = VkKeyboard()
+                keyboard.add_button('1')
+                keyboard.add_button('2')
+                keyboard.add_button('3')
+                self.send_message(user_id, keyboard, '«{user}, я очень рад, что ты принял моё приглашение и пришёл помочь освободить '
                                                  'наш мир от непрошенных гостей. Судя по твоему виду, ты уже встретил кого-то из наших недоброжелателей. '
                                                  'Хорошо, что ты не пострадал! Ой, я совсем забыл представиться, меня зовут Cmd, надеюсь, мы быстро подружимся '
                                                  'и вместе одолеем всех вирусов.»'.format(user=self.get_name(user_id)))
-            self.send_message_not_buttons(user_id, '(1) «А что здесь произошло, почему в моём компьютере одновременно оказалось столько вредоносных программ?» ')
-            self.send_message_not_buttons(user_id, '(2) «И как нам справиться со всеми врагами?»')
-            self.send_message_not_buttons(user_id, '(3) «Рад знакомству, какие будут предложения, что делать дальше?»')
-            self.target = 'Дальнейшее развитие'
+                self.send_message_not_buttons(user_id, '(1) «А что здесь произошло, почему в моём компьютере одновременно оказалось столько вредоносных программ?» ')
+                self.send_message_not_buttons(user_id, '(2) «И как нам справиться со всеми врагами?»')
+                self.send_message_not_buttons(user_id, '(3) «Рад знакомству, какие будут предложения, что делать дальше?»')
+                self.target = 'Дальнейшее развитие'
         elif self.target == 'Дальнейшее развитие' and (text == '1' or text == '2' or text == '3'):
             keyboard = VkKeyboard()
             keyboard.add_button('Что для этого нужно?')

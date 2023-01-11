@@ -1,3 +1,5 @@
+import os
+
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor, VkKeyboardButton
 
 def battle_DestructiveTrojanHorse(self, text, user_id):
@@ -78,9 +80,15 @@ def battle_Rootkit(self, text, user_id):
                 keyboard.add_line()
                 keyboard.add_button('Подсказка')
             else:
-                self.send_message_not_buttons(user_id,
+                try:
+                    # отправляем фотку(ниже 1 скрин)
+                    self.send_photo(photo_1=os.path.abspath(os.path.join('Pictures', 'руткит.png')), user_id=user_id)
+                except Exception as exc:
+                    print('Картинка не прогрузилась!')
+                finally:
+                    self.send_message_not_buttons(user_id,
                                               'Небольшой анализ позволил вам определить, что вы столкнулись с Руткитом. Используя эффект неожиданности, противник нанёс удар, но, благодаря молниеносной реакции, вам удалось увернуться, и удар прошёл мимо. ')
-                self.send_message_not_buttons(user_id,
+                    self.send_message_not_buttons(user_id,
                                               'Похоже, что руткит серьёзно настроен устранить вас, поэтому избежать сражения не представляется возможным. Стоит попробовать ответить обидчику.')
 
             self.send_message_not_buttons(user_id, '1. Удалить все файлы руткита которые сразу заметны')
@@ -207,16 +215,22 @@ def battle_lossing_boss(self, text, user_id):
 def battle_KeyLogger(self, text, user_id):
     if self.target == 'mini_boss_KeyLogger':
         if text == 'Продолжить':
-            keyboard = VkKeyboard()
-            keyboard.add_button('1')
-            keyboard.add_button('2')
-            self.send_message_not_buttons(user_id,
+            try:
+                # отправляем фотку(ниже 1 скрин)
+                self.send_photo(photo_1=os.path.abspath(os.path.join('Pictures', 'шпион.png')), user_id=user_id)
+            except Exception as exc:
+                print('Картинка не прогрузилась!')
+            finally:
+                keyboard = VkKeyboard()
+                keyboard.add_button('1')
+                keyboard.add_button('2')
+                self.send_message_not_buttons(user_id,
                                           'Дальнейший ваш путь прошёл без происшествий. Вы уже видите указатель на корневую папку, но тут ваш взгляд привлек к себе небольшой странный комок, состоящий из проводов.')
-            self.send_message_not_buttons(user_id,
+                self.send_message_not_buttons(user_id,
                                           'Подойдя чуть ближе, вы смогли разглядеть, что узел проводов подключён к самому компьютеру и перекачивает ваши данные. Скорее всего, это клавиатурный шпион. Как поступите?')
-            self.send_message_not_buttons(user_id,
+                self.send_message_not_buttons(user_id,
                                           '1. Пройду мимо, незачем отвлекаться от намеченной цели, сейчас есть дела поважнее')
-            self.target = self.send_message_with_target('mini_boss_KeyLogger_choice', user_id, keyboard,
+                self.target = self.send_message_with_target('mini_boss_KeyLogger_choice', user_id, keyboard,
                                                         '2. Нельзя позволять вирусам так безнаказанно воровать информацию у меня под носом!')
     elif self.target == 'mini_boss_KeyLogger_choice':
         if text == '1':
@@ -235,7 +249,13 @@ def battle_KeyLogger(self, text, user_id):
                 keyboard.add_line()
                 keyboard.add_button('Подсказка')
             else:
-                self.send_message_not_buttons(user_id, 'Что предпримите?')
+                try:
+                    # отправляем фотку(ниже 1 скрин)
+                    self.send_photo(photo_1=os.path.abspath(os.path.join('Pictures', 'шпион.png')), user_id=user_id)
+                except Exception as exc:
+                    print('Картинка не прогрузилась!')
+                finally:
+                    self.send_message_not_buttons(user_id, 'Что предпримите?')
             self.send_message_not_buttons(user_id, '1. Установлю антишпионский продукт')
             self.send_message_not_buttons(user_id, '2. Буду всегда вводить пароли вручную')
             self.send_message_not_buttons(user_id,
@@ -290,14 +310,20 @@ def battle_Hijacker(self, text, user_id):
                 keyboard.add_line()
                 keyboard.add_button('Подсказка')
             else:
-                self.send_message_not_buttons(user_id, 'До вашей цели осталось всего лишь повернуть за угол. И вот вы уже воодушевлены и готовы к встрече с новыми '
+                try:
+                    # отправляем фотку(ниже 1 скрин)
+                    self.send_photo(photo_1=os.path.abspath(os.path.join('Pictures', 'хиджакер2.png')), user_id=user_id)
+                except Exception as exc:
+                    print('Картинка не прогрузилась!')
+                finally:
+                    self.send_message_not_buttons(user_id, 'До вашей цели осталось всего лишь повернуть за угол. И вот вы уже воодушевлены и готовы к встрече с новыми '
                                                        'противниками, как вдруг что-то хватает вас за ногу и резко тянет назад. Вы падаете, и нечто утягивает вас в расщелину, '
                                                        'не замеченную вами ранее. Как оказалось, вы слишком рано переключились на мысли о своих дальнейших действиях и не '
                                                        'обратили внимание на осторожно ползущие за вами щупальца хиджакера. Ваша легкомысленность приводит к тому, что, '
                                                        'находясь в нескольких шагах от заветной папки, вы оказались затянуты очередным вирусом в недра компьютера, внешне '
                                                        'напоминающие чащу леса. Оглядев своё новое местоположение, чуть поодаль вы увидели иконку браузера, из чего вами был '
                                                        'сделан вывод, что вирус пришёл из Интернета.')
-                self.send_message_not_buttons(user_id, 'Сам же монстр наконец предстал перед вами во всей красе, и вы снова оказались перед непростым выбором: каким же образом вступить с противником в бой')
+                    self.send_message_not_buttons(user_id, 'Сам же монстр наконец предстал перед вами во всей красе, и вы снова оказались перед непростым выбором: каким же образом вступить с противником в бой')
             self.send_message_not_buttons(user_id, '1. Удалить браузер')
             self.send_message_not_buttons(user_id, '2. Удалить в браузере все ненужных и подозрительных инструментов и расширений')
             self.send_message_not_buttons(user_id, '3. Поменять основной браузер на другой')
@@ -353,9 +379,15 @@ def battle_Hijacker(self, text, user_id):
 def battle_AdWare(self, text, user_id):
     if self.target == 'mini_boss_AdWare':
         if text == 'Продолжить':
-            keyboard = VkKeyboard()
-            keyboard.add_button('Бой!')
-            self.send_message_with_target('mini_boss_AdWare_choice', user_id, keyboard, 'Заинтересовавшись замеченной ранее иконкой, вы подошли туда. Конечно же, с вашей сегодняшней удачей около браузера вы заметили Рекламную программу считывающую полную информацию о вас, не спросив у вас разрешения. Так не годится!')
+            try:
+                # отправляем фотку(ниже 1 скрин)
+                self.send_photo(photo_1=os.path.abspath(os.path.join('Pictures', 'adware.png')), user_id=user_id)
+            except Exception as exc:
+                print('Картинка не прогрузилась!')
+            finally:
+                keyboard = VkKeyboard()
+                keyboard.add_button('Бой!')
+                self.target = self.send_message_with_target('mini_boss_AdWare_choice', user_id, keyboard, 'Заинтересовавшись замеченной ранее иконкой, вы подошли туда. Конечно же, с вашей сегодняшней удачей около браузера вы заметили Рекламную программу считывающую полную информацию о вас, не спросив у вас разрешения. Так не годится!')
     elif self.target == 'mini_boss_AdWare_choice':
         if text == 'Бой!' or text == 'Попробовать ещё раз':
             keyboard = VkKeyboard()
@@ -397,12 +429,18 @@ def battle_Clicker(self, text, user_id):
         if text == 'Продолжить':
             keyboard = VkKeyboard()
             keyboard.add_button('Опознать врага')
-            self.send_message_with_target('mini_boss_Clicker_recognize', user_id, keyboard, 'И так как рекламная программа была удалена, вы решили следовать дальше, но ваши поиски верного пути в очередной раз были прерваны появлением нового врага.')
+            self.target = self.send_message_with_target('mini_boss_Clicker_recognize', user_id, keyboard, 'И так как рекламная программа была удалена, вы решили следовать дальше, но ваши поиски верного пути в очередной раз были прерваны появлением нового врага.')
     elif self.target == 'mini_boss_Clicker_recognize':
         if text == 'Опознать врага':
-            keyboard = VkKeyboard()
-            keyboard.add_button('Бой!')
-            self.send_message_with_target('mini_boss_Clicker_choice', user_id, keyboard, 'Перед вами появляется программа Кликер, которая занимается рассылкой спама, содержащий потенциально опасные приложения. И похоже, что он не особо рад вашему присутствию')
+            try:
+                # отправляем фотку(ниже 1 скрин)
+                self.send_photo(photo_1=os.path.abspath(os.path.join('Pictures', 'кликер.png')), user_id=user_id)
+            except Exception as exc:
+                print('Картинка не прогрузилась!')
+            finally:
+                keyboard = VkKeyboard()
+                keyboard.add_button('Бой!')
+                self.target = self.send_message_with_target('mini_boss_Clicker_choice', user_id, keyboard, 'Перед вами появляется программа Кликер, которая занимается рассылкой спама, содержащий потенциально опасные приложения. И похоже, что он не особо рад вашему присутствию')
     elif self.target == 'mini_boss_Clicker_choice':
         if text == 'Бой!' or text == 'Попробовать ещё раз':
             keyboard = VkKeyboard()
@@ -450,15 +488,21 @@ def unknown_file(self, text, user_id):
                 keyboard.add_line()
                 keyboard.add_button('Подсказка')
             else:
-                self.send_message_not_buttons(user_id,
+                try:
+                    # отправляем фотку(ниже 1 скрин)
+                    self.send_photo(photo_1=os.path.abspath(os.path.join('Pictures', 'босс_окно.png')), user_id=user_id)
+                except Exception as exc:
+                    print('Картинка не прогрузилась!')
+                finally:
+                    self.send_message_not_buttons(user_id,
                                               'Оказывается, что в компьютерах путаются и теряются не только бабушки, так как вы сами уже битый час плутаете в лабиринте различных проводов, матриц и непонятных деталей и складывается ощущение, что бродите вы по кругу.')
-                self.send_message_not_buttons(user_id,
+                    self.send_message_not_buttons(user_id,
                                               'И вот, когда вы в очередной раз заметили знакомый узел проводов, прямо из воздуха появилось всплывающее окно с сообщением от вашего друга:')
-                self.send_message_not_buttons(user_id,
+                    self.send_message_not_buttons(user_id,
                                               '«Привет, {user}, вышла новая игра, и у меня есть доступ к бесплатной версии. Скачивай быстрее, иначе этот файл быстро почистят. Надо просто открыть файл, и загрузка пойдёт сама. Я вот уже несколько часов играю, это бомба!»'.format(user=self.get_name(user_id)))
-                self.send_message_not_buttons(user_id,
+                    self.send_message_not_buttons(user_id,
                                               'К сообщению был прикреплён файл, а так как вы никогда не отказывались от халявных игр, то ваш первый порыв был просто запустить файл.')
-                self.send_message_not_buttons(user_id,
+                    self.send_message_not_buttons(user_id,
                                               'Но уже в следующую секунду вы остановили себя и решили немного подумать. За последние пару часов вы столкнулись с таким количеством вредоносных программ, что подумали о том, что сразу же открывать незнакомый файл не стоит, а лучше')
             self.send_message_not_buttons(user_id, '1. Изменить расширение файла')
             self.send_message_not_buttons(user_id,
@@ -519,11 +563,17 @@ def battle_RAT(self, text, user_id):
                 keyboard.add_line()
                 keyboard.add_button('Подсказка')
             else:
-                self.send_message_not_buttons(user_id,
+                try:
+                    # отправляем фотку(ниже 1 скрин)
+                    self.send_photo(photo_1=os.path.abspath(os.path.join('Pictures', 'зомби_1.png')), user_id=user_id)
+                except Exception as exc:
+                    print('Картинка не прогрузилась!')
+                finally:
+                    self.send_message_not_buttons(user_id,
                                               'Похоже, что мы всё-таки вышли на правильный путь, и буквально через 10 минут вы уже стоите у входа в корневую папку.')
-                self.send_message_not_buttons(user_id,
+                    self.send_message_not_buttons(user_id,
                                               'Только зайдя внутрь, вы сразу встречаете двух зомби. Судя по всему, это Программы Удалённого Администрирования, и настроены они явно недружелюбно.')
-                self.send_message_not_buttons(user_id,
+                    self.send_message_not_buttons(user_id,
                                               'Вы, может, и хотели разойтись мирно, но вирусы ваше желание не разделили, так что возникает необходимость атаковать. Что предпримите?')
             self.send_message_not_buttons(user_id, '1. Зайду на сайты, где требуется ввод логина и пароля')
             self.send_message_not_buttons(user_id,
@@ -577,15 +627,21 @@ def battle_Zombie(self, text, user_id):
                 keyboard.add_line()
                 keyboard.add_button('Подсказка')
             else:
-                self.send_message_not_buttons(user_id,
+                try:
+                    # отправляем фотку(ниже 1 скрин)
+                    self.send_photo(photo_1=os.path.abspath(os.path.join('Pictures', 'зомби.png')), user_id=user_id)
+                except Exception as exc:
+                    print('Картинка не прогрузилась!')
+                finally:
+                    self.send_message_not_buttons(user_id,
                                               'Вы уже успели подумать, что всё закончено и вы справились со всеми трудностями и преодолели все препятствия, как вдруг, раздался громкий нечеловеческий рёв.')
-                self.send_message_not_buttons(user_id,
+                    self.send_message_not_buttons(user_id,
                                               'Разворачиваетесь на звук и только сейчас замечаете большое чудище, чем-то напоминающее двух предыдущих. Но размерами он превышал их вместе взятых.')
-                self.send_message_not_buttons(user_id,
+                    self.send_message_not_buttons(user_id,
                                               'Вы вспомнили о том, что cmd предупреждал вас о наличии боссов, и решили, что это именно он.')
-                self.send_message_not_buttons(user_id,
+                    self.send_message_not_buttons(user_id,
                                               'Сейчас вы понимаете, что до победы остался один шаг, и перед вами встаёт последний выбор, который повлияет на то, избавитесь ли вы окончательно от всех вредоносных программ или нет.')
-                self.send_message_not_buttons(user_id,
+                    self.send_message_not_buttons(user_id,
                                               'Как будете бороться с врагом?')
             self.send_message_not_buttons(user_id, '1. Полная переустановка системы ')
             self.send_message_not_buttons(user_id, '2. Полное сканирование устройства с помощью антивируса и удаления временных файлов')
