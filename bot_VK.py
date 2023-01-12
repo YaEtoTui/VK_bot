@@ -105,9 +105,9 @@ while True:
 
                         dict_targets[user_id].send_message(user_id, keyboard, 'В тот же миг на ваш компьютер загружается вредоносная программа, которая находилась '
                                                                               'в письме и только и ждала того, чтобы вы его открыли. ')
-                        dict_targets[user_id].send_message_not_buttons(user_id, '1. -Перезапущу компьютер, и всё будет хорошо')
-                        dict_targets[user_id].send_message_not_buttons(user_id, '2. -Ой, а что же теперь делать?')
-                        dict_targets[user_id].send_message_not_buttons(user_id, '3. -Да не может такого быть, приколы какие-то')
+                        dict_targets[user_id].send_message_not_buttons(user_id, '1. Перезапущу компьютер, и всё будет хорошо')
+                        dict_targets[user_id].send_message_not_buttons(user_id, '2. Ой, а что же теперь делать?')
+                        dict_targets[user_id].send_message_not_buttons(user_id, '3. Да не может такого быть, приколы какие-то')
                         dict_targets[user_id].target = 'start_1'
                 elif dict_targets[user_id].target == 'start_1' and (text == '1' or text == '2' or text == '3'):
                     if text == '1':
